@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Werkzeug- und Holzhändler Deutschland</title>
+<meta name="description" content="Karte der Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug sowie Holzhändler mit Privatverkauf in Deutschland, den Nachbarländern und dem Vereinigten Königreich.">
+</head>
+<body>
+<script>try{var d=localStorage.getItem("karte-design"),t=localStorage.getItem("karte-theme");if(/^[abcd]$/.test(d))document.documentElement.setAttribute("data-design",d);if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>
+/* Layout: links die Karte (klebt beim Scrollen), rechts Eingabemaske, Filter und Händlerliste; am Handy untereinander. */
+:root{
+  --f-display:"Zilla Slab",Georgia,"Times New Roman",serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+/* Vier Designs wie in der Löffelschablone (Salbei, Ahorn, Papier & Terrakotta, Morgenhimmel), je hell und dunkel; ohne Wahl folgt Hell/Dunkel dem System */
+:root[data-design="a"]{--bg:#f3f6f2; --surface:#ffffff; --water:#d9e5e3; --land:#e8eee9; --home:#d4e2d8; --border-land:#a5bfaf; --border-soft:#c6d5cb; --ink:#1f2b26; --muted:#53645d; --line:#d6e0d9; --city:#7f9188; --tool:#2c5a87; --wood:#a4512a; --focus:#2e6a56; --err:#a3302a}
+:root[data-design="b"]{--bg:#f7f1e8; --surface:#fffcf7; --water:#dce4e4; --land:#f0e7da; --home:#e8d8c0; --border-land:#c8a47a; --border-soft:#ddcdb6; --ink:#2b2118; --muted:#6b5845; --line:#e6dac9; --city:#9c8a73; --tool:#2c5a87; --wood:#9c4a1c; --focus:#a8701c; --err:#a3302a}
+:root[data-design="c"], :root:not([data-design]){--bg:#faf6ef; --surface:#fffdf9; --water:#e1e5e4; --land:#f2ece2; --home:#e9dfcf; --border-land:#c6b59d; --border-soft:#dcd1c2; --ink:#2a2420; --muted:#6a5e55; --line:#e7ded2; --city:#9a8e83; --tool:#2f5878; --wood:#ad472c; --focus:#ad472c; --err:#8f2a24}
+:root[data-design="d"]{--bg:#f2f5f8; --surface:#ffffff; --water:#d2e0eb; --land:#e9eef3; --home:#dae4ee; --border-land:#a7bacb; --border-soft:#c9d5e0; --ink:#1c2630; --muted:#536170; --line:#d7dfe7; --city:#8492a0; --tool:#1f6c76; --wood:#b5562c; --focus:#1f6c76; --err:#a3302a}
+@media (prefers-color-scheme:dark){:root[data-design="a"]:not([data-theme="light"]){--bg:#141a18; --surface:#1c2421; --water:#13201f; --land:#1d2522; --home:#25322c; --border-land:#3d5148; --border-soft:#2f3d37; --ink:#e4ece8; --muted:#9aaba3; --line:#2e3a35; --city:#6d7d76; --tool:#7fadd9; --wood:#e3905f; --focus:#7cc0a5; --err:#ef8a80; color-scheme:dark}}
+:root[data-design="a"][data-theme="dark"]{--bg:#141a18; --surface:#1c2421; --water:#13201f; --land:#1d2522; --home:#25322c; --border-land:#3d5148; --border-soft:#2f3d37; --ink:#e4ece8; --muted:#9aaba3; --line:#2e3a35; --city:#6d7d76; --tool:#7fadd9; --wood:#e3905f; --focus:#7cc0a5; --err:#ef8a80; color-scheme:dark}
+@media (prefers-color-scheme:dark){:root[data-design="b"]:not([data-theme="light"]){--bg:#1a1510; --surface:#241d16; --water:#141c1f; --land:#241e17; --home:#33291e; --border-land:#5a4630; --border-soft:#3b3025; --ink:#f0e6d8; --muted:#b3a08a; --line:#3b3025; --city:#857463; --tool:#86b2dc; --wood:#e89a62; --focus:#e2aa4c; --err:#ef8a80; color-scheme:dark}}
+:root[data-design="b"][data-theme="dark"]{--bg:#1a1510; --surface:#241d16; --water:#141c1f; --land:#241e17; --home:#33291e; --border-land:#5a4630; --border-soft:#3b3025; --ink:#f0e6d8; --muted:#b3a08a; --line:#3b3025; --city:#857463; --tool:#86b2dc; --wood:#e89a62; --focus:#e2aa4c; --err:#ef8a80; color-scheme:dark}
+@media (prefers-color-scheme:dark){:root[data-design="c"]:not([data-theme="light"]), :root:not([data-design]):not([data-theme="light"]){--bg:#1b1816; --surface:#252120; --water:#161c1f; --land:#25211e; --home:#332c27; --border-land:#55483f; --border-soft:#3a3430; --ink:#efe8e0; --muted:#ab9f94; --line:#3a3430; --city:#83776d; --tool:#86b0d6; --wood:#e07a5c; --focus:#e07a5c; --err:#f19a8f; color-scheme:dark}}
+:root[data-design="c"][data-theme="dark"], :root:not([data-design])[data-theme="dark"]{--bg:#1b1816; --surface:#252120; --water:#161c1f; --land:#25211e; --home:#332c27; --border-land:#55483f; --border-soft:#3a3430; --ink:#efe8e0; --muted:#ab9f94; --line:#3a3430; --city:#83776d; --tool:#86b0d6; --wood:#e07a5c; --focus:#e07a5c; --err:#f19a8f; color-scheme:dark}
+@media (prefers-color-scheme:dark){:root[data-design="d"]:not([data-theme="light"]){--bg:#12171c; --surface:#1a2128; --water:#0f1a24; --land:#1b2229; --home:#24303b; --border-land:#3e5061; --border-soft:#2c3640; --ink:#e3eaf0; --muted:#98a6b3; --line:#2c3640; --city:#6c7a87; --tool:#62b6bf; --wood:#e8946a; --focus:#62b6bf; --err:#ef8a80; color-scheme:dark}}
+:root[data-design="d"][data-theme="dark"]{--bg:#12171c; --surface:#1a2128; --water:#0f1a24; --land:#1b2229; --home:#24303b; --border-land:#3e5061; --border-soft:#2c3640; --ink:#e3eaf0; --muted:#98a6b3; --line:#2c3640; --city:#6c7a87; --tool:#62b6bf; --wood:#e8946a; --focus:#62b6bf; --err:#ef8a80; color-scheme:dark}
+/* Formen je Design: Ahorn weich, Papier flach, Morgenhimmel rund */
+:root[data-design="b"] :is(.chip,.btn,.search,.landsel,.mapframe,.pop,.panel){border-radius:10px}
+:root[data-design="c"] :is(.chip,.btn,.search,.landsel,.pop,.panel){border-radius:4px}
+:root[data-design="d"] :is(.chip,.btn){border-radius:999px} :root[data-design="d"] :is(.mapframe,.pop,.panel){border-radius:16px}
+.design{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.dsg-btn{font:500 13px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.langsw{display:flex;flex:none;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.langsw button{font:600 12px var(--f-body);letter-spacing:.04em;color:var(--muted);background:var(--surface);border:0;padding:6px 9px;cursor:pointer}
+.langsw button+button{border-left:1px solid var(--line)}
+.langsw button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.langsw button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+:root[data-design="d"] .langsw{border-radius:999px}
+.dsg-btn:focus-visible,.dsg-menu button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.dsg-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:20;width:250px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:6px;display:grid;gap:2px}
+.dsg-menu[hidden]{display:none}
+.dsg-h{font:600 11px var(--f-body);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);padding:6px 8px 4px}
+.dsg-menu button{display:flex;align-items:center;gap:10px;border:0;background:transparent;border-radius:6px;padding:7px 8px;cursor:pointer;text-align:left;font:400 14px var(--f-body);color:var(--ink)}
+.dsg-menu button:hover{background:var(--bg)}
+.sw{width:20px;height:20px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--sw1) 50%,var(--sw2) 50%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.dsg-menu .ck{margin-left:auto;color:var(--focus);visibility:hidden}
+.dsg-menu [aria-checked="true"]{font-weight:600}
+.dsg-menu [aria-checked="true"] .ck{visibility:visible}
+.dsg-menu hr{border:0;border-top:1px solid var(--line);margin:4px 2px}
+.switch{margin-left:auto;width:34px;height:20px;border-radius:10px;background:var(--line);position:relative;flex:none}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.dm[aria-checked="true"] .switch{background:var(--focus)}
+.dm[aria-checked="true"] .switch::after{transform:translateX(14px)}
+@media (prefers-reduced-motion:no-preference){.switch,.switch::after{transition:all .15s}}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1280px;margin:0 auto;padding-block:28px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:20px}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{margin:6px 0 0;color:var(--muted);max-width:66ch}
+.stand{font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.02em}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+.mapbox{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;gap:8px}
+@media (max-width:860px){.mapbox{position:static}}
+.views{display:flex;flex-wrap:wrap;gap:6px}
+.mapframe{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg)}
+svg.map{width:100%;height:auto;display:block;max-height:calc(100vh - 210px);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+svg.map.dragging{cursor:grabbing}
+svg.map.picking{cursor:crosshair}
+.zoom{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.zoom button{font:600 18px/1 var(--f-body);width:34px;height:34px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.zoom button+button{border-top:1px solid var(--line)}
+.zoom button:hover{background:var(--bg)}
+.zoom button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.pop{position:absolute;z-index:4;width:min(310px,calc(100% - 20px));max-height:calc(100% - 20px);overflow:auto;box-sizing:border-box;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.22)}
+.pop.dock{left:10px;right:10px;bottom:10px;top:auto;width:auto;max-height:60%}
+.pop h3{font-family:var(--f-display);font-weight:600;font-size:18px;line-height:1.25;margin:0 28px 2px 0}
+.pop .x{position:absolute;top:6px;right:6px;width:28px;height:28px;border:0;border-radius:4px;background:transparent;color:var(--muted);font:500 20px/1 var(--f-body);cursor:pointer}
+.pop .x:hover{background:var(--bg);color:var(--ink)}
+.pop .x:focus-visible{outline:2px solid var(--focus)}
+.maphint{margin:0;font-size:12.5px;color:var(--muted)}
+.chip .n{font-family:var(--f-mono);font-size:11.5px;opacity:.7;margin-left:4px}
+.sea{fill:var(--water)}
+.land{fill:var(--land)}
+.home{fill:var(--home);stroke:var(--border-land);stroke-width:1.3;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.border{fill:none;stroke:var(--border-soft);stroke-width:1;stroke-dasharray:4 3;vector-effect:non-scaling-stroke}
+.water{fill:var(--water)}
+.country{fill:var(--muted);font-family:var(--f-body);font-weight:500;letter-spacing:.12em;text-transform:uppercase;opacity:.75;pointer-events:none}
+.city circle{fill:var(--city)}
+.city text{fill:var(--city);font-family:var(--f-body);font-weight:500;pointer-events:none}
+.m{cursor:pointer}
+.m .shape{stroke:var(--surface);stroke-width:1.6}
+.m.tool .shape{fill:var(--tool)}
+.m.wood .shape{fill:var(--wood)}
+.m.hw .shape{fill:var(--surface);stroke:var(--wood);stroke-width:1.8}
+.m.hw:hover .shape,.m.hw.sel .shape{fill:var(--wood);stroke:var(--ink)}
+.m.own .ring{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-dasharray:2.2 1.8}
+.m:hover .shape,.m.sel .shape{stroke:var(--ink);stroke-width:2}
+.m:focus{outline:none}
+.m:focus-visible .shape{stroke:var(--focus);stroke-width:3}
+.pin line{stroke:var(--focus);stroke-width:2}
+.pin circle{fill:none;stroke:var(--focus);stroke-width:2.5}
+.tip{font-family:var(--f-body);font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-linejoin:round;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .lg-h{font-weight:600;color:var(--ink)}
+.legend .lg-row{display:flex;flex-wrap:wrap;gap:4px 16px;width:100%}
+.legend svg{flex:none}
+
+.tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:14px}
+.btn{font:600 14px var(--f-body);border-radius:6px;padding:8px 14px;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.small{font-size:12.5px;padding:3px 9px;font-weight:500}
+.btn.danger{background:transparent;color:var(--err);border-color:var(--err)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.dbnote{font-size:13px;color:var(--muted)}
+
+.panel{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:16px;margin-bottom:18px}
+.panel h2{font-family:var(--f-display);font-weight:600;font-size:21px;margin:0 0 4px}
+.hint{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.form{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px 12px}
+.fld{display:flex;flex-direction:column;gap:3px;grid-column:span 3;min-width:0}
+.fld.w6{grid-column:span 6}.fld.w2{grid-column:span 2}.fld.w4{grid-column:span 4}
+@media (max-width:520px){.fld,.fld.w2,.fld.w4{grid-column:span 6}}
+.fld label{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.fld input,.fld select,.fld textarea,.search,.landsel{font:400 14px var(--f-body);color:var(--ink);background:var(--bg);
+  border:1px solid var(--line);border-radius:6px;padding:7px 9px;box-sizing:border-box;width:100%}
+.fld textarea{resize:vertical;min-height:58px}
+.pos{font-family:var(--f-mono);font-size:13px}
+.pos.missing{color:var(--err)}
+.formerr{grid-column:span 6;color:var(--err);font-size:13.5px;min-height:1px}
+.actions{grid-column:span 6;display:flex;flex-wrap:wrap;gap:8px}
+
+.filters{display:flex;flex-direction:column;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font:500 13px var(--f-body);color:var(--ink);background:transparent;border:1px solid var(--line);
+  border-radius:999px;padding:5px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,.search:focus-visible,.item:focus-visible,.btn:focus-visible,.fld :focus-visible,.landsel:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.landsel{width:auto;max-width:100%}
+.count{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+
+.list{list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:14px minmax(0,1fr);gap:4px 12px;padding:14px 8px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:4px}
+.item:hover{background:var(--surface)}
+.item.sel{background:var(--surface);box-shadow:inset 3px 0 0 var(--focus)}
+.item .mk{margin-top:6px}
+.item h3{font-family:var(--f-display);font-weight:600;font-size:18px;line-height:1.25;margin:0}
+.addr{font-size:13px;color:var(--muted)}
+.addr .plz{font-family:var(--f-mono);font-size:12px}
+.what{margin:4px 0 0;font-size:14px}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:6px}
+.tag{font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:1px 6px}
+.tag.y{color:var(--ink);border-color:var(--muted)}
+.tag.warn{border-style:dashed}
+.tag.own{color:var(--ink);border:1px dashed var(--ink)}
+.links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:6px;font-size:13px}
+.links a{color:var(--tool);text-underline-offset:2px;overflow-wrap:anywhere}
+.confirm{font-size:13px;color:var(--err);display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center}
+.empty{padding:24px 8px;color:var(--muted)}
+
+.notes{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px 32px;border-top:1px solid var(--line);padding-top:20px}
+.notes h2{font-family:var(--f-display);font-weight:600;font-size:19px;margin:0 0 6px}
+.notes li{font-size:14px;color:var(--muted);margin:0 0 6px;max-width:62ch}
+.notes ul{margin:0;padding-left:18px}
+@media (prefers-reduced-motion:no-preference){.item{transition:background-color .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Werkzeug- und Holzhändler Deutschland</h1>
+      <p class="lede">Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug im Stil von DICTUM und Dieter Schmid sowie Holzhändler, die auch an Privatleute verkaufen, in Deutschland, den Nachbarländern und dem Vereinigten Königreich. Die recherchierten Einträge sind an der Händlerseite geprüft. Weitere Holzhändler, von Lesern empfohlen, listet die Zeitschrift HolzWerken unter holzwerken.net/finder.</p>
+    </div>
+    <div class="design">
+      <div class="stand"><span>Stand 02.11.2026</span> · <span id="total"></span> <span>Einträge</span></div>
+      <div class="langsw" role="group" aria-label="Sprache"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button type="button" class="dsg-btn" id="dsgBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="dsgMenu"><span class="sw" id="dsgSw"></span>Design</button>
+      <div class="dsg-menu" id="dsgMenu" role="menu" aria-label="Design" hidden>
+        <div class="dsg-h" aria-hidden="true">Design</div>
+        <button type="button" role="menuitemradio" data-dsg="a" aria-checked="false"><span class="sw" style="--sw1:#2e6a56;--sw2:#a5bfaf"></span><span>Salbei</span><svg class="ck" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" role="menuitemradio" data-dsg="b" aria-checked="false"><span class="sw" style="--sw1:#d69a35;--sw2:#c8a47a"></span><span>Ahorn</span><svg class="ck" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" role="menuitemradio" data-dsg="c" aria-checked="false"><span class="sw" style="--sw1:#ad472c;--sw2:#c6b59d"></span><span>Papier &amp; Terrakotta</span><svg class="ck" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" role="menuitemradio" data-dsg="d" aria-checked="false"><span class="sw" style="--sw1:#1f6c76;--sw2:#a7bacb"></span><span>Morgenhimmel</span><svg class="ck" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <hr>
+        <button type="button" role="menuitemcheckbox" class="dm" id="themeBtn" aria-checked="false"><span>Dunkle Darstellung</span><span class="switch" aria-hidden="true"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="mapbox">
+      <div class="views" role="group" aria-label="Land wählen" id="views"></div>
+      <div class="mapframe">
+        <svg class="map" id="map" role="img" aria-label="Karte von Deutschland, den Nachbarländern und Großbritannien mit Händlerstandorten"></svg>
+        <div class="pop" id="pop" role="dialog" aria-label="Infos zum Standort" hidden></div>
+        <div class="zoom" role="group" aria-label="Zoom">
+          <button type="button" id="zIn" aria-label="Hineinzoomen">+</button>
+          <button type="button" id="zOut" aria-label="Herauszoomen">−</button>
+          <button type="button" id="zAll" aria-label="Ganze Karte zeigen" title="Ganze Karte">⤢</button>
+        </div>
+      </div>
+      <p class="maphint">Mausrad oder zwei Finger zoomen, ziehen verschiebt, Doppelklick zoomt hinein.</p>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <section aria-label="Händlerliste">
+      <div class="tools">
+        <button class="btn" id="addBtn" type="button">Punkt ergänzen</button>
+        <span class="dbnote" id="dbnote"></span> <a class="dbnote" href="https://github.com/hoewimi/werkstattkarte/issues" target="_blank" rel="noopener">Hinweis auf GitHub</a>
+      </div>
+
+      <div class="panel" id="panel" hidden>
+        <h2 id="panelTitle">Punkt ergänzen</h2>
+        <p class="hint">Klicke in die Karte, um den Standort zu setzen. Zum Feinjustieren einfach noch einmal klicken; vorher am besten nah heranzoomen.</p>
+        <form class="form" id="form" novalidate>
+          <div class="fld w6"><label for="f-n">Name</label><input id="f-n" required maxlength="120" autocomplete="off"></div>
+          <div class="fld"><label for="f-c">Kategorie</label>
+            <select id="f-c"><option value="tool">Werkzeug, Drechselbedarf</option><option value="wood">Holz</option></select></div>
+          <div class="fld"><label for="f-s">Schwerpunkt</label><select id="f-s"></select></div>
+          <div class="fld w4"><label for="f-a">Straße</label><input id="f-a" maxlength="120" autocomplete="off"></div>
+          <div class="fld w2"><label for="f-p">PLZ</label><input id="f-p" maxlength="12" autocomplete="off"></div>
+          <div class="fld w4"><label for="f-o">Ort</label><input id="f-o" maxlength="80" autocomplete="off"></div>
+          <div class="fld w2"><label for="f-L">Land</label><select id="f-L"></select></div>
+          <div class="fld w6"><label for="f-w">Website</label><input id="f-w" type="url" maxlength="300" placeholder="https://" autocomplete="off"></div>
+          <div class="fld w2"><label for="f-art">Art</label>
+            <select id="f-art"><option value="laden">Laden oder Lager</option><option value="online">Nur Versand</option><option value="beides">Laden und Versand</option><option value="kurs">Kursort</option></select></div>
+          <div class="fld w2"><label for="f-k">Kurse</label>
+            <select id="f-k"><option value="unbekannt">unbekannt</option><option value="ja">ja</option><option value="nein">nein</option></select></div>
+          <div class="fld w2" id="f-pr-wrap"><label for="f-pr">Privatverkauf</label>
+            <select id="f-pr"><option value="ja">ja</option><option value="unklar">unklar</option></select></div>
+          <div class="fld w6"><label for="f-t">Beschreibung</label><textarea id="f-t" maxlength="400"></textarea></div>
+          <div class="fld w6"><label>Standort</label><span class="pos missing" id="f-pos">Noch nicht gesetzt: in die Karte klicken</span></div>
+          <div class="formerr" id="formerr" role="alert"></div>
+          <div class="actions">
+            <button class="btn" type="submit" id="saveBtn">Speichern</button>
+            <button class="btn ghost" type="button" id="cancelBtn">Abbrechen</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="filters">
+        <div class="row" id="catRow" role="group" aria-label="Kategorie">
+          <button class="chip" id="c-all" data-cat="all" aria-pressed="true">Alle</button>
+          <button class="chip" id="c-tool" data-cat="tool" aria-pressed="false">Werkzeug</button>
+          <button class="chip" id="c-wood" data-cat="wood" aria-pressed="false">Holz</button>
+        </div>
+        <div class="row" id="subRow" role="group" aria-label="Schwerpunkt"></div>
+        <div class="row" role="group" aria-label="Eigenschaften">
+          <button class="chip" id="f-laden" data-flag="laden" aria-pressed="false">Laden oder Lager vor Ort</button>
+          <button class="chip" id="f-versand" data-flag="versand" aria-pressed="false">Versand</button>
+          <button class="chip" id="f-kurse" data-flag="kurse" aria-pressed="false">Kurse</button>
+        </div>
+        <input class="search" id="q" type="search" placeholder="Name, Ort, PLZ oder Holzart suchen" aria-label="Suchen">
+        <div class="count" id="count"></div>
+      </div>
+      <ul class="list" id="list"></ul>
+    </section>
+  </div>
+
+  <div class="notes">
+    <div>
+      <h2>Richtigstellungen</h2>
+      <ul>
+        <li>„Feine Werkzeuge“ (feinewerkzeuge.de, fine-tools.com) gehört der Dieter Schmid Werkzeuge GmbH in Berlin und verkauft seit 2020 nur noch online. Einen Händler Thomas Schmitz in Hückeswagen konnte die Recherche nicht finden.</li>
+        <li>DICTUM sitzt seit 2018 in Plattling, nicht mehr in Metten. Dazu kommen der Laden mit Kurswerkstatt in München und die Kurswerkstatt Niederalteich.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>HolzWerken-Liste</h2>
+      <ul>
+        <li>Die Leserliste der Zeitschrift HolzWerken mit mehreren hundert weiteren Holzhändlern ist auf dieser Karte nicht enthalten. Es gibt sie kostenlos als PDF unter holzwerken.net/finder.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Lücken</h2>
+      <ul>
+        <li>In Mecklenburg-Vorpommern, Brandenburg, Sachsen-Anhalt und Thüringen fand die Recherche keinen Holzhändler mit belegtem Privatverkauf.</li>
+        <li>Händlerlisten von Kirschen, Pfeil, Tormek und Sorby sind nicht öffentlich; Handwerkzeug-Fachhandel jenseits der großen Versender ist dünn.</li>
+        <li>Löffelschnitzen: Kleine Schmieden mit eigenem Shop für Hakenmesser fand die Recherche in Deutschland und Österreich nicht; die meisten Händler führen Mora, BeaverCraft und Narex. Ausgesprochene Spooncarving-Spezialisten sind Carolina's Slöjd, Hout van Bomen, Wolfknives und Bois et Toile.</li>
+        <li>Vereinigtes Königreich: Axminster Tools ist seit Oktober 2025 in Administration, aufgenommen ist nur der Laden in Axminster. The Toolpost und Peter Child haben geschlossen; Craft Supplies, Ashley Iles und Robert Sorby verkaufen nur über Händler. In Schottland und Nordirland fand die Recherche kaum Werkzeughändler.</li>
+        <li>Für Luxemburg fand die Recherche keinen passenden Händler, im Elsass und in Lothringen keinen Werkzeughändler.</li>
+        <li>Kurse sind bei den meisten Holzhändlern nicht geprüft. Die Ländergrenzen sind vereinfacht gezeichnet.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Bewusst weggelassen</h2>
+      <ul>
+        <li>Nebelheim Tonholz (stellt Holzverkauf Ende 2026 ein), Drechselholz Laschinger (Geschäftsaufgabe Februar 2027).</li>
+        <li>Händler ohne erreichbare Website oder mit veraltetem Stand, z. B. Holz Osenstätter, Holz Widmann, BZN Meyer &amp; Sohn, Paul Hartmann.</li>
+        <li>Reine Maschinen-, B2B- oder Plattenhändler; Pfeil (Hersteller in Langenthal, kein Laden belegt).</li>
+        <li>Außerhalb der Karte, aber gute Versender: Auriou in Saint-Juéry (Raspeln, Lie-Nielsen, auriou.fr) und La Maison du Tournage in Bédarieux (Drechselbedarf, maisondutournage.com); für Löffelschnitzen Pyrene Bushcraft bei Toulouse (Mora, BeaverCraft, pyrene-bushcraft.com).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// Plattkarte: x aus Länge mal cos(51°), y aus Breite; Ursprung oben links bei 10,6° W / 59° N
+const LON0=-10.6, LAT0=59.0, K=100, CX=Math.cos(51*Math.PI/180);
+const P=(lon,lat)=>[(lon-LON0)*K*CX,(LAT0-lat)*K];
+const INV=(x,y)=>[x/(K*CX)+LON0, LAT0-y/K];
+const EXT=[-10.6,45.6,19.5,59.0];
+// Seitenverhältnis des Kartenfensters: wie der frühere Ausschnitt Mitteleuropa (hochkant), die ganze Karte liegt darin als Blatt
+const FRAME=[1.9,45.6,19.5,57.9];
+
+const LANDS={DE:"Deutschland",AT:"Österreich",CH:"Schweiz",NL:"Niederlande",BE:"Belgien",LU:"Luxemburg",FR:"Frankreich",DK:"Dänemark",PL:"Polen",CZ:"Tschechien",GB:"Vereinigtes Königreich"};
+// Kartenausschnitt je Land (Länge/Breite min und max); Frankreich nur der sichtbare Norden
+const BOX={"":EXT,DE:[5.5,47.2,15.2,55.1],AT:[9.4,46.3,17.2,49.1],CH:[5.9,45.8,10.5,47.85],NL:[3.3,50.7,7.3,53.6],BE:[2.5,49.45,6.45,51.55],
+  LU:[5.6,49.35,6.6,50.2],FR:[-4.8,45.6,8.3,51.1],DK:[8.0,54.5,12.8,57.8],PL:[14.1,49.0,19.5,54.9],CZ:[12.0,48.5,18.9,51.1],GB:[-8.3,49.9,1.8,58.7]};
+
+const BORDER=[[7.20,53.25],[7.02,53.35],[7.05,53.55],[7.22,53.66],[7.60,53.72],[8.00,53.71],[8.10,53.55],[8.18,53.42],[8.30,53.52],[8.48,53.58],[8.58,53.52],[8.55,53.75],[8.70,53.88],[9.00,53.88],[8.85,54.10],[8.62,54.30],[8.90,54.47],[8.62,54.62],[8.60,54.90],[9.00,54.84],[9.45,54.83],[9.90,54.76],[10.03,54.55],[9.88,54.45],[10.15,54.42],[10.65,54.32],[11.05,54.45],[11.10,54.20],[10.85,54.02],[11.20,53.95],[11.55,54.05],[12.10,54.18],[12.45,54.47],[13.00,54.42],[13.30,54.68],[13.70,54.55],[13.65,54.30],[13.40,54.12],[13.85,54.10],[14.22,53.93],[14.25,53.70],[14.40,53.30],[14.15,52.98],[14.60,52.60],[14.55,52.35],[14.75,52.07],[14.65,51.75],[14.75,51.55],[15.00,51.25],[14.98,51.10],[14.82,50.87],[14.60,50.93],[14.40,51.03],[14.25,50.90],[13.90,50.79],[13.50,50.63],[13.05,50.45],[12.70,50.40],[12.33,50.22],[12.20,50.32],[12.10,50.25],[12.30,50.05],[12.50,49.75],[12.80,49.35],[13.40,49.05],[13.84,48.77],[13.80,48.57],[13.45,48.57],[13.00,48.30],[12.82,48.15],[12.95,47.95],[13.00,47.75],[13.05,47.50],[12.80,47.62],[12.75,47.68],[12.20,47.60],[11.60,47.53],[11.10,47.40],[10.95,47.42],[10.60,47.55],[10.45,47.50],[10.20,47.27],[9.97,47.55],[9.70,47.55],[9.17,47.66],[8.85,47.70],[8.60,47.80],[8.45,47.58],[8.20,47.60],[7.60,47.58],[7.55,47.80],[7.58,48.05],[7.80,48.55],[8.10,48.85],[8.22,48.97],[7.60,49.07],[7.30,49.12],[7.05,49.12],[6.75,49.17],[6.50,49.40],[6.37,49.47],[6.50,49.72],[6.20,49.95],[6.13,50.13],[6.40,50.32],[6.18,50.52],[6.02,50.75],[6.08,50.92],[5.87,51.05],[6.17,51.18],[6.20,51.40],[6.00,51.65],[5.95,51.82],[6.40,51.83],[6.72,51.90],[6.82,52.00],[7.05,52.22],[6.70,52.48],[7.05,52.64],[7.08,52.85],[7.20,53.00]];
+
+// Festland als ein Umriss: Westrand, Küste von Frankreich bis Danzig, Ostrand, Unterkante
+const FR_W=[[-1.1,45.6],[-1.15,45.8],[-1.05,46.0],[-1.15,46.15],[-1.4,46.32],[-1.8,46.5],[-2.0,46.75],[-2.15,46.95],[-2.05,47.1],[-2.2,47.27],[-2.5,47.3],[-2.75,47.48],[-3.1,47.5],[-3.4,47.7],[-3.9,47.82],[-4.35,47.8],[-4.73,48.04],[-4.35,48.15],[-4.6,48.3],[-4.77,48.4],[-4.6,48.58],[-4.0,48.72],[-3.5,48.84],[-3.0,48.78],[-2.7,48.53],[-2.3,48.65],[-2.0,48.65],[-1.55,48.63],[-1.55,48.85],[-1.6,49.2],[-1.85,49.5],[-1.94,49.72],[-1.6,49.66],[-1.27,49.7],[-1.25,49.5],[-1.1,49.38],[-0.5,49.33],[0.1,49.45],[0.2,49.7],[0.6,49.86],[1.1,49.93],[1.4,50.1],[1.58,50.4],[1.6,50.75],[1.85,50.95]];             // Atlantik- und Kanalküste von der Gironde bis Calais
+const COAST_W=[[1.9,50.97],[2.3,51.04],[2.55,51.09],[3.2,51.35],[3.6,51.42],[3.45,51.55],[3.8,51.75],[4.05,51.97],[4.4,52.25],[4.55,52.45],[4.65,52.8],[4.75,52.96],[5.1,53.05],[5.5,53.3],[6.0,53.42],[6.5,53.45],[7.0,53.33]];
+const NS_DE=BORDER.slice(1,19);           // Emden bis dänische Grenze
+const JUT=[[8.65,55.3],[8.3,55.55],[8.08,55.6],[8.15,56.0],[8.12,56.55],[8.25,56.8],[8.6,57.12],[9.5,57.15],[9.9,57.45],[10.6,57.74],[10.45,57.55],[10.55,57.25],[10.3,56.95],[10.3,56.6],[10.95,56.45],[10.5,56.2],[10.25,55.85],[9.85,55.65],[9.7,55.5],[9.6,55.25],[9.75,55.05],[9.95,54.95],[9.6,54.86]];
+const BAL_DE=BORDER.slice(21,40);         // Geltinger Birk bis Usedom
+const PL=[[14.5,53.95],[14.8,54.05],[15.5,54.18],[16.2,54.35],[16.9,54.6],[17.6,54.8],[18.33,54.83],[18.5,54.6],[18.65,54.4],[19.0,54.35],[19.5,54.42]];
+const MAIN=[...FR_W,...COAST_W,...NS_DE,...JUT,...BAL_DE,...PL,[19.5,45.6]];
+const ISLANDS=[
+ [[1.38,51.15],[1.45,51.35],[1.0,51.42],[0.6,51.48],[0.9,51.6],[0.95,51.78],[1.27,51.88],[1.6,52.1],[1.75,52.5],[1.73,52.7],[1.4,52.92],[0.95,52.97],[0.5,52.95],[0.3,52.8],[0.2,52.85],[0.35,53.05],[0.35,53.2],[0.15,53.45],[0.12,53.6],[-0.1,53.75],[-0.2,54.1],[-0.4,54.3],[-0.6,54.48],[-1.15,54.65],[-1.4,55.0],[-1.5,55.25],[-1.6,55.6],[-2.0,55.8],[-2.4,55.95],[-2.9,56.05],[-3.2,56.02],[-2.85,56.2],[-2.6,56.3],[-2.85,56.45],[-2.5,56.6],[-2.2,56.95],[-2.05,57.15],[-1.8,57.5],[-2.0,57.68],[-2.8,57.7],[-3.4,57.67],[-4.05,57.55],[-4.0,57.75],[-3.8,57.87],[-3.95,58.0],[-3.65,58.1],[-3.1,58.4],[-3.05,58.6],[-3.37,58.66],[-4.0,58.58],[-4.6,58.55],[-5.0,58.62],[-5.15,58.4],[-5.3,58.1],[-5.4,57.85],[-5.75,57.55],[-5.6,57.3],[-5.75,57.0],[-5.9,56.75],[-6.2,56.72],[-5.7,56.5],[-5.55,56.2],[-5.6,55.75],[-5.75,55.3],[-5.5,55.4],[-5.35,55.85],[-4.9,55.9],[-4.85,55.6],[-4.65,55.45],[-5.0,55.1],[-5.15,54.85],[-4.85,54.65],[-4.4,54.75],[-3.6,54.85],[-3.2,54.95],[-3.4,54.7],[-3.6,54.5],[-3.25,54.15],[-3.0,53.95],[-3.05,53.65],[-3.1,53.4],[-3.3,53.35],[-4.0,53.3],[-4.4,53.42],[-4.6,53.3],[-4.3,53.12],[-4.75,52.8],[-4.1,52.9],[-4.1,52.6],[-4.05,52.3],[-4.6,52.1],[-5.3,51.88],[-5.0,51.65],[-4.5,51.7],[-4.2,51.55],[-3.8,51.6],[-3.2,51.45],[-2.7,51.55],[-2.95,51.35],[-3.6,51.22],[-4.2,51.2],[-4.55,51.0],[-4.75,50.6],[-5.0,50.45],[-5.45,50.2],[-5.7,50.05],[-5.2,50.0],[-5.05,50.15],[-4.6,50.33],[-4.2,50.35],[-3.6,50.25],[-3.45,50.6],[-3.0,50.7],[-2.45,50.6],[-1.95,50.6],[-1.6,50.73],[-1.3,50.82],[-0.8,50.75],[-0.2,50.82],[0.25,50.75],[0.75,50.9],[0.97,50.92]],
+ [[-6.15,55.22],[-5.7,54.8],[-5.45,54.5],[-5.6,54.25],[-6.1,54.0],[-6.25,53.7],[-6.1,53.35],[-6.0,52.95],[-6.2,52.45],[-6.4,52.2],[-7.0,52.15],[-7.6,51.95],[-8.3,51.8],[-9.0,51.55],[-9.8,51.45],[-10.2,51.6],[-9.8,51.75],[-10.35,51.95],[-10.0,52.15],[-9.7,52.55],[-9.4,52.85],[-9.0,53.15],[-9.6,53.25],[-10.15,53.45],[-9.9,53.85],[-10.05,54.2],[-9.2,54.3],[-8.6,54.25],[-8.5,54.55],[-8.75,54.7],[-8.35,55.05],[-7.65,55.25],[-7.25,55.05],[-6.75,55.18]],
+ [[-1.58,50.67],[-1.3,50.77],[-1.08,50.68],[-1.3,50.57]],
+ [[-4.8,54.05],[-4.4,54.4],[-4.3,54.35],[-4.65,54.05]],
+ [[-6.2,58.5],[-6.15,58.25],[-6.4,58.0],[-6.9,57.75],[-7.1,57.8],[-7.05,58.2],[-6.6,58.35]],
+ [[-7.2,57.65],[-7.4,57.65],[-7.5,57.2],[-7.3,57.05],[-7.2,57.3]],
+ [[-6.3,57.7],[-5.95,57.55],[-5.7,57.25],[-6.15,57.1],[-6.65,57.3],[-6.75,57.5]],
+ [[-5.7,56.6],[-5.9,56.35],[-6.35,56.3],[-6.3,56.55],[-6.0,56.65]],
+ [[-6.1,55.9],[-6.45,55.9],[-6.4,55.6],[-6.1,55.65]],
+ [[-3.35,59.0],[-3.0,58.8],[-2.75,58.9],[-2.9,59.0]],
+ [[9.7,55.5],[10.0,55.6],[10.5,55.55],[10.85,55.3],[10.75,55.05],[10.3,55.05],[9.95,55.1],[9.7,55.25]],
+ [[12.6,56.03],[12.6,55.68],[12.2,55.45],[12.45,55.3],[12.1,55.15],[11.75,55.15],[11.15,55.33],[11.1,55.68],[11.3,55.98],[11.85,56.0],[12.3,56.12]],
+ [[11.1,54.85],[11.5,54.95],[12.0,54.95],[12.15,54.75],[11.95,54.57],[11.5,54.65],[11.1,54.72]],
+ [[11.0,54.53],[11.3,54.47],[11.25,54.4],[11.0,54.41]],
+ [[14.7,55.1],[14.85,55.3],[15.15,55.15],[15.05,54.99],[14.75,55.05]],
+ [[5.5,59.0],[5.6,58.88],[5.55,58.7],[5.9,58.45],[6.6,58.08],[7.05,57.98],[7.6,58.02],[8.0,58.12],[8.6,58.4],[9.2,58.72],[9.6,58.95],[9.8,59.0],[10.9,59.0],[11.1,58.9],[11.25,58.6],[11.45,58.25],[11.75,57.95],[11.9,57.65],[12.1,57.4],[12.3,57.05],[12.6,56.8],[12.85,56.65],[12.6,56.4],[12.45,56.3],[12.7,56.05],[12.9,55.7],[13.0,55.6],[12.85,55.4],[13.4,55.35],[13.8,55.42],[14.2,55.4],[14.35,55.6],[14.2,55.85],[14.55,56.05],[14.85,56.15],[15.6,56.15],[16.0,56.2],[16.4,56.6],[16.6,57.0],[16.65,57.5],[16.7,57.9],[16.75,58.3],[16.9,58.6],[17.4,58.75],[17.9,58.9],[18.1,59.0]],
+ [[16.4,56.2],[16.7,56.6],[17.1,57.35],[16.9,57.3],[16.45,56.65]],
+ [[18.15,56.92],[18.75,57.35],[19.0,57.85],[18.7,57.9],[18.1,57.5]]
+];
+const LAKES=[
+ [[9.0,47.78],[9.25,47.72],[9.6,47.55],[9.75,47.5],[9.55,47.47],[9.2,47.62],[9.0,47.7]],
+ [[6.15,46.25],[6.5,46.5],[6.9,46.45],[6.8,46.37],[6.5,46.4],[6.2,46.2]],
+ [[5.05,52.4],[5.1,52.65],[5.2,53.0],[5.4,52.85],[5.6,52.6],[5.35,52.4]]
+];
+const BORDERS=[
+ [[-7.25,55.05],[-7.55,54.75],[-8.15,54.45],[-7.6,54.15],[-7.0,54.25],[-6.6,54.05],[-6.1,54.0]],
+ [[3.37,51.37],[4.25,51.38],[4.75,51.45],[5.05,51.48],[5.85,51.15],[5.7,50.76],[6.02,50.75]],
+ [[2.55,51.09],[2.9,50.7],[3.6,50.5],[4.15,50.3],[4.85,50.15],[4.85,49.8],[5.45,49.5],[5.82,49.55]],
+ [[5.82,49.55],[5.75,49.85],[6.03,50.17],[6.13,50.13]],[[5.82,49.55],[6.37,49.47]],
+ [[7.58,47.58],[6.95,47.5],[6.45,46.95],[6.1,46.55],[5.95,46.15],[6.25,46.3],[6.8,46.1],[6.85,45.85],[7.05,45.6]],
+ [[6.85,45.85],[7.5,45.95],[8.1,46.25],[8.45,46.45],[8.85,46.05],[9.0,45.82],[9.3,46.5],[10.0,46.4],[10.45,46.55],[10.47,46.86]],
+ [[9.55,47.5],[9.6,47.05],[9.9,46.95],[10.47,46.86]],
+ [[10.47,46.86],[11.0,46.77],[11.5,46.98],[12.2,47.08],[12.45,46.7],[13.7,46.52]],
+ [[13.7,46.52],[14.6,46.42],[15.0,46.65],[16.0,46.68],[16.1,46.86]],
+ [[16.1,46.86],[16.5,47.0],[16.45,47.4],[16.9,47.7],[17.1,48.0]],
+ [[17.1,48.0],[16.95,48.6],[16.0,48.75],[15.0,49.0],[14.7,48.6],[13.84,48.77]],
+ [[16.95,48.6],[17.7,48.85],[18.2,49.3],[18.85,49.5],[19.5,49.6]],
+ [[14.82,50.87],[15.4,50.8],[16.3,50.65],[16.4,50.3],[17.2,50.3],[17.8,50.0],[18.6,49.9],[18.85,49.5]],
+ [[17.1,48.0],[17.8,47.75],[18.8,47.8],[19.5,48.1]]
+];
+const COUNTRIES=[["Großbritannien",-1.6,52.6],["Irland",-8.0,53.0],["Norwegen",8.2,58.75],["Frankreich",2.6,47.6],["Belgien",4.55,50.55],["Niederlande",5.75,52.25],["Lux.",6.1,49.75],["Schweiz",8.0,46.8],["Österreich",14.3,47.45],["Tschechien",15.5,49.75],["Polen",17.0,52.3],["Dänemark",9.1,56.3],["Schweden",14.3,56.75],["Italien",10.7,45.9],["Slowakei",18.6,48.6],["Ungarn",18.3,47.3],["Deutschland",9.7,50.55]];
+const CITIES=[["London",-0.13,51.51],["Birmingham",-1.9,52.48],["Manchester",-2.24,53.48],["Leeds",-1.55,53.8],["Newcastle",-1.61,54.98],["Glasgow",-4.25,55.86],["Edinburgh",-3.19,55.95],["Bristol",-2.59,51.45],["Cardiff",-3.18,51.48],["Belfast",-5.93,54.6],["Dublin",-6.26,53.35],["Rennes",-1.68,48.11],["Nantes",-1.55,47.22],
+ ["Hamburg",10.0,53.55],["Bremen",8.80,53.08],["Hannover",9.73,52.37],["Berlin",13.40,52.52],["Leipzig",12.37,51.34],["Dresden",13.74,51.05],["Köln",6.96,50.94],["Frankfurt",8.68,50.11],["Nürnberg",11.08,49.45],["Stuttgart",9.18,48.78],["München",11.58,48.14],["Rostock",12.13,54.09],["Erfurt",11.03,50.98],["Magdeburg",11.62,52.13],
+ ["Wien",16.37,48.21],["Zürich",8.54,47.38],["Genf",6.14,46.2],["Bern",7.45,46.95],["Innsbruck",11.4,47.27],["Salzburg",13.05,47.8],["Graz",15.44,47.07],["Amsterdam",4.9,52.37],["Brüssel",4.35,50.85],["Luxemburg",6.13,49.61],["Straßburg",7.75,48.58],["Prag",14.42,50.08],["Brünn",16.61,49.2],["Kopenhagen",12.57,55.68],["Aarhus",10.2,56.16],["Breslau",17.04,51.11],["Posen",16.93,52.41],["Stettin",14.55,53.43],["Danzig",18.65,54.35],["Paris",2.35,48.86]];
+
+// art: laden | online | beides | kurs · si: hoch | mittel · pr nur bei Holz · L Landeskürzel
+const D=[
+ {n:"DICTUM Plattling",c:"tool",s:"Handwerkzeug",sp:1,a:"Gottlieb-Daimler-Str. 3",p:"94447",o:"Plattling",w:"https://dictum.com",art:"beides",k:"ja",t:"Japanische und westliche Handwerkzeuge, Schärfen, Schnitzen, Drechseln, Hobelbänke. Firmensitz und Laden.",te:"Japanese and Western hand tools, sharpening, carving, woodturning, workbenches. Headquarters and shop.",lat:48.78,lon:12.87,q:"https://dictum.com/en/history-of-the-company",si:"hoch"},
+ {n:"DICTUM Laden und Kurswerkstatt München",c:"tool",s:"Handwerkzeug",a:"Haager Str. 9",p:"81671",o:"München",w:"https://dictum.com/en/company/shops/dictum-shop-munich/",art:"laden",k:"ja",t:"Laden im 2. Stock, Kurswerkstatt im 4. Stock.",te:"Shop on the 2nd floor, course workshop on the 4th floor.",lat:48.125,lon:11.61,q:"https://dictum.com/en/company/shops/dictum-shop-munich/",si:"hoch"},
+ {n:"DICTUM Kurswerkstatt Niederalteich",c:"tool",s:"Handwerkzeug",a:"St. Ursula-Weg 19",p:"94557",o:"Niederalteich",w:"https://kurswerkstatt.dictum.com",art:"kurs",k:"ja",t:"Kursort im ehemaligen Klosterstall mit Drechsel-, Bank- und Schärfraum.",te:"Course venue in a former monastery stable with woodturning, bench and sharpening rooms.",lat:48.74,lon:13.06,q:"https://dictum.com/en/history-of-the-company",si:"hoch"},
+ {n:"Dieter Schmid Feine Werkzeuge",c:"tool",s:"Handwerkzeug",sp:1,a:"Wilhelm-von-Siemens-Str. 23",p:"12277",o:"Berlin",w:"https://www.feinewerkzeuge.de",art:"online",k:"nein",t:"Japanische Stemmeisen und Sägen, Kirschen-Bildhauereisen, Hobel, Schärfen. Seit 2020 nur Versand, Telefonberatung.",te:"Japanese chisels and saws, Kirschen carving gouges, planes, sharpening. Mail order only since 2020, telephone advice.",lat:52.405,lon:13.30,q:"https://www.feinewerkzeuge.de/Unternehmen/Impressum/",si:"hoch"},
+ {n:"Mehr als Werkzeuge (Klosterhof Brunshausen)",c:"tool",s:"Handwerkzeug",a:"Brunshausen 6",p:"37581",o:"Bad Gandersheim",w:"https://www.klosterhof-brunshausen.de/haus-hofladen/mehr-als-werkzeuge/",art:"laden",k:"unbekannt",t:"DICTUM-Sortiment im Hofladen: Japansägen, Stecheisen, Hobel, Bildhauerwerkzeug, Schärfmittel.",te:"DICTUM range in the farm shop: Japanese saws, chisels, planes, carving tools, sharpening supplies.",lat:51.87,lon:10.03,q:"https://www.klosterhof-brunshausen.de/impressum/",si:"mittel"},
+ {n:"Schreinerwerkzeug24",c:"tool",s:"Handwerkzeug",a:"Mainblick 6",p:"65451",o:"Kelsterbach",w:"https://www.schreinerwerkzeug24.de",art:"online",k:"nein",t:"Hobel von Veritas, Kunz und aus Japan, Sägen, Beitel, Bildhauer- und Drechselwerkzeug.",te:"Planes from Veritas, Kunz and Japan, saws, chisels, carving and woodturning tools.",lat:50.06,lon:8.53,q:"https://www.schreinerwerkzeug24.de/impressum/",si:"mittel"},
+ {n:"sautershop",c:"tool",s:"Handwerkzeug",a:"Arzbergerstraße 4",p:"82211",o:"Herrsching a. Ammersee",w:"https://www.sautershop.de",art:"online",k:"unbekannt",t:"Holzwerkzeug, Hobelbänke, Tormek, Kirschen; dazu viele Maschinen (Festool, Mafell).",te:"Woodworking tools, workbenches, Tormek, Kirschen; also many machines (Festool, Mafell).",lat:48.00,lon:11.17,q:"https://www.sautershop.de/impressum/",si:"mittel"},
+ {n:"Ballas",c:"tool",s:"Drechselbedarf",a:"Maxstraße 4",p:"86551",o:"Aichach",w:"https://ballas-shop.de",art:"beides",k:"ja",t:"Drechselbedarf, Handwerkzeug mit Japanwerkzeug, Holzmaschinen; 1.500 m² Ausstellung.",te:"Woodturning supplies, hand tools including Japanese tools, woodworking machines; 1,500 m² showroom.",lat:48.46,lon:11.13,q:"https://ballas-shop.de/kontakt/",si:"mittel"},
+ {n:"Drechselbedarf Schulte",c:"tool",s:"Drechselbedarf",a:"Meppener Straße 111",p:"49744",o:"Geeste (Groß Hesepe)",w:"https://www.drechselbedarf-schulte.de",art:"beides",k:"ja",t:"Drechselwerkzeug, Drechselbänke, Schärfsysteme, Zubehör; Laden mit Ausstellung, Samstagsverkauf. Kurse auch in Dresden.",te:"Woodturning tools, lathes, sharpening systems, accessories; shop with showroom, Saturday sales. Courses also in Dresden.",lat:52.61,lon:7.29,q:"https://www.drechselbedarf-schulte.de/impressum",si:"hoch"},
+ {n:"Drechselstube Neckarsteinach",c:"tool",s:"Drechselbedarf",a:"Finkenweg 11",p:"69239",o:"Neckarsteinach",w:"https://www.drechselstube.de",art:"online",k:"ja",t:"Eigene Marke „dns“: Schleifsysteme und Schleifrotoren für Drechsler.",te:"Own brand “dns”: grinding systems and grinding rotors for woodturners.",lat:49.41,lon:8.84,q:"https://www.drechselstube.de/agb/",si:"hoch"},
+ {n:"Steinert Drechselzentrum Erzgebirge",c:"tool",s:"Drechselbedarf",a:"Kaiserreich Straße 4",p:"83088",o:"Kiefersfelden",w:"https://www.drechslershop.de",art:"online",k:"unbekannt",t:"Großer Drechselbedarf-Shop mit Ausstellungsraum; Lager in 07381 Oppurg.",te:"Large woodturning supplies shop with showroom; warehouse in 07381 Oppurg.",lat:47.64,lon:12.19,q:"https://www.drechslershop.de/",si:"hoch"},
+ {n:"Drechseln und Mehr",c:"tool",s:"Drechselbedarf",a:"Schustermooslohe 94",p:"92637",o:"Weiden i. d. OPf.",w:"https://www.drechselnundmehr.de",art:"online",k:"unbekannt",t:"Drechselbänke, Drechseleisen, Pen-Zubehör, Schärfsysteme; Besuch nach Termin.",te:"Lathes, turning tools, pen accessories, sharpening systems; visits by appointment.",lat:49.68,lon:12.16,q:"https://www.drechselnundmehr.de/impressum",si:"hoch"},
+ {n:"Hager Drechselbänke",c:"tool",s:"Drechselbedarf",a:"Mühlbachstraße 5",p:"84547",o:"Emmerting",w:"https://shop.hager-drechseln.de",art:"online",k:"ja",t:"Hersteller von Drechselbänken, Woodcut- und Crown-Eisen, Zubehör; jährliche Hausmesse.",te:"Manufacturer of lathes, Woodcut and Crown turning tools, accessories; annual in-house show.",lat:48.20,lon:12.77,q:"https://shop.hager-drechseln.de",si:"mittel"},
+
+ {n:"Cropp Timber",c:"wood",s:"Edelholz",a:"Großmoorring 10 (Verkauf 9b)",p:"21079",o:"Hamburg-Harburg",w:"https://www.cropp-timber.com",art:"beides",k:"nein",pr:"ja",t:"Rund 130 heimische und exotische Holzarten, Schnitt-, Ton- und Drechselholz; Verkaufslager auch für Privatkunden.",te:"Around 130 native and exotic wood species, sawn timber, tonewood and turning blanks; sales warehouse also for private customers.",lat:53.46,lon:9.98,q:"https://www.cropp-timber.com/",si:"hoch"},
+ {n:"Designholz.com",c:"wood",s:"Edelholz",a:"Beim Alten Schützenhof 13",p:"22083",o:"Hamburg",w:"https://designholz.com",art:"online",k:"unbekannt",pr:"ja",t:"Massivholz-Onlineshop: Nussbaum-Bretter und -Bohlen, Furniere.",te:"Solid wood online shop: walnut boards and planks, veneers.",lat:53.60,lon:10.07,q:"https://designholz.com/information/impressum/",si:"mittel"},
+ {n:"JS Massivholz",c:"wood",s:"Edelholz",a:"Oberndorfer Straße 10a",p:"74585",o:"Rot am See",w:"https://jsmassivholz.de",art:"online",k:"nein",pr:"ja",t:"Über 30 Holzarten, Zuschnitte 60–160 cm, Drechselholz; auch ein einzelnes Brett.",te:"Over 30 wood species, cuts of 60–160 cm, turning blanks; even a single board.",lat:49.25,lon:10.03,q:"https://www.jsmassivholz.de/impressum",si:"hoch"},
+ {n:"Karl Kohl Edelhölzer",c:"wood",s:"Edelholz",a:"Unnauer Weg 29-31",p:"50767",o:"Köln",w:"https://www.kohl-holz.de",art:"laden",k:"unbekannt",pr:"unklar",t:"Edelholz-Schnittholz, Leimholz, Furniere, Tischplatten.",te:"Fine-wood sawn timber, glued laminated timber, veneers, tabletops.",lat:51.01,lon:6.88,q:"https://www.kohl-holz.de",si:"mittel"},
+ {n:"Wilfried Koch Furniere",c:"wood",s:"Edelholz",a:"Dießemer Bruch 134",p:"47805",o:"Krefeld",w:"http://www.koch-furniere.de",art:"laden",k:"unbekannt",pr:"ja",t:"Furniere, Schnitthölzer, Massivholzplatten in vielen Holzarten.",te:"Veneers, sawn timber, solid wood panels in many wood species.",lat:51.32,lon:6.60,q:"http://www.koch-furniere.de/",si:"hoch"},
+ {n:"Furnier Lehmann",c:"wood",s:"Edelholz",a:"Kitzingstraße 21-23",p:"12277",o:"Berlin",w:"http://www.furnier-lehmann.de",art:"laden",k:"unbekannt",pr:"ja",t:"Furniere, Schnittholz, Edelhölzer, Drechslerhölzer, Raritäten.",te:"Veneers, sawn timber, fine woods, woodturners' timber, rarities.",lat:52.39,lon:13.42,q:"http://www.furnier-lehmann.de/",si:"mittel"},
+ {n:"Furnier-Manufaktur",c:"wood",s:"Edelholz",a:"Rinscheweg 28",p:"48159",o:"Münster",w:"https://furnier-manufaktur.de",art:"online",k:"unbekannt",pr:"unklar",t:"Sägefurnier, Edelholz, Tonholz, Massivholz, Lohnschnitt.",te:"Sawn veneer, fine wood, tonewood, solid wood, custom sawing.",lat:51.99,lon:7.62,q:"https://furnier-manufaktur.de/impressum/",si:"mittel"},
+ {n:"ESPEN",c:"wood",s:"Tonholz",a:"Eibenstrasse 18-20",p:"61118",o:"Bad Vilbel",w:"https://www.espen.de",art:"beides",k:"unbekannt",pr:"ja",t:"Über 110 Holzarten: Tonholz, Drechselholz, Schnittholz; Zuschnitt und Versand.",te:"Over 110 wood species: tonewood, turning blanks, sawn timber; cutting to size and mail order.",lat:50.19,lon:8.74,q:"https://www.espen.de/",si:"mittel"},
+ {n:"LOWA Holz (Logemann & Waibel)",c:"wood",s:"Tonholz",a:"Spitzäcker 2",p:"74931",o:"Lobbach",w:"http://www.lowa-holz.de",art:"beides",k:"unbekannt",pr:"ja",t:"Vor allem Exoten und Tonhölzer, auch Elsbeere und andere heimische Hölzer; Versand über eBay-Shop „tonholzshop“.",te:"Mainly exotics and tonewoods, also service tree and other native woods; mail order via eBay shop “tonholzshop”.",lat:49.37,lon:8.90,q:"https://www.woodworker.de/forum/threads/bezugsquellen-holz.83285/post-1109111",si:"mittel"},
+ {n:"Der Gitarrenladen",c:"wood",s:"Tonholz",a:"Waldseerstr. 9",p:"88250",o:"Weingarten",w:"https://www.der-gitarrenladen.de",art:"beides",k:"unbekannt",pr:"ja",t:"Abgelagerte Fichtendecken und Gitarrenbau-Hölzer.",te:"Seasoned spruce tops and woods for guitar making.",lat:47.81,lon:9.64,q:"https://www.der-gitarrenladen.de/impressum",si:"hoch"},
+ {n:"Tonholz-Tonewood (Andreas Sandner)",c:"wood",s:"Tonholz",a:"Siedlerstr. 9",p:"91080",o:"Spardorf",w:"http://tonholz-tonewood.de",art:"online",k:"unbekannt",pr:"ja",t:"Tonholz für Geige, Cello, Gitarre; luftgetrocknete Altbestände Fichte und Ahorn.",te:"Tonewood for violin, cello, guitar; air-dried old stock of spruce and maple.",lat:49.61,lon:11.06,q:"http://tonholz-tonewood.de/",si:"hoch"},
+ {n:"TMGuitars Tonholz",c:"wood",s:"Tonholz",a:"Im Winkel 4B",p:"38518",o:"Gifhorn",w:"https://www.tmguitars.de/Tonholz.html",art:"online",k:"unbekannt",pr:"unklar",t:"Tonholz für den Gitarrenbau, Qualitätsstufen A bis 5A.",te:"Tonewood for guitar making, quality grades A to 5A.",lat:52.48,lon:10.55,q:"https://www.tmguitars.de/Tonholz.html",si:"mittel"},
+ {n:"zuschnittholz24.de",c:"wood",s:"Drechsel- und Schnitzholz",a:"Burgviertel 12",p:"64385",o:"Reichelsheim (Odenwald)",w:"https://zuschnittholz24.de",art:"online",k:"ja",pr:"ja",t:"Drechselholz, Schnitzholz (vor allem Linde), Messergriffholz, Pen-Blanks, Tonholz.",te:"Turning blanks, carving wood (mainly linden), knife handle wood, pen blanks, tonewood.",lat:49.71,lon:8.85,q:"https://zuschnittholz24.de/impressum",si:"hoch"},
+ {n:"Hobbyholz",c:"wood",s:"Drechsel- und Schnitzholz",a:"Ahauser Str. 6",p:"48739",o:"Legden",w:"https://www.hobbyholz.de",art:"beides",k:"unbekannt",pr:"ja",t:"Drechsel- und Schnitzholz, dazu Drechseleisen und Pen-Zubehör; Laden nach Termin.",te:"Turning and carving wood, plus turning tools and pen accessories; shop by appointment.",lat:52.03,lon:7.10,q:"https://www.hobbyholz.de",si:"mittel"},
+ {n:"Holz Herbst",c:"wood",s:"Holzfachhandel",a:"Christian-Herbst-Str. 10",p:"21339",o:"Lüneburg",w:"https://www.holzherbst.de",art:"laden",k:"unbekannt",pr:"ja",t:"Schnittholz, Eiche, Exoten; Heimwerker willkommen.",te:"Sawn timber, oak, exotics; DIY customers welcome.",lat:53.25,lon:10.41,q:"https://www.holzherbst.de/",si:"hoch"},
+ {n:"Holzhandlung Herbst Lüchow",c:"wood",s:"Holzfachhandel",a:"Am Kleinbahnhof 7",p:"29439",o:"Lüchow",w:"https://baudrauf-herbst.de",art:"laden",k:"unbekannt",pr:"ja",t:"Schnittholz, Massivholzdielen, Kantholz; Privatkunden ausdrücklich.",te:"Sawn timber, solid wood floorboards, squared timber; private customers explicitly welcome.",lat:52.97,lon:11.15,q:"https://baudrauf-herbst.de/",si:"mittel"},
+ {n:"HolzLand Barsch",c:"wood",s:"Holzfachhandel",a:"Schulenburger Landstr. 87",p:"30165",o:"Hannover",w:"http://www.holzbarsch.de",art:"laden",k:"unbekannt",pr:"ja",t:"Holzfachmarkt: Dielen, Bauholz, Platten.",te:"Timber merchant: floorboards, construction timber, sheet material.",lat:52.39,lon:9.68,q:"http://www.holzbarsch.de",si:"mittel"},
+ {n:"HolzLand Stoellger",c:"wood",s:"Holzfachhandel",a:"Bayernstraße 18",p:"30855",o:"Langenhagen",w:"https://www.holzland-stoellger.de",art:"beides",k:"unbekannt",pr:"ja",t:"Holzfachmarkt mit Ausstellung und Onlineshop: Bauholz, Platten, Böden.",te:"Timber merchant with showroom and online shop: construction timber, sheet material, flooring.",lat:52.46,lon:9.78,q:"https://www.holzland-stoellger.de/",si:"mittel"},
+ {n:"Possling",c:"wood",s:"Holzfachhandel",a:"Haarlemer Straße 57",p:"12359",o:"Berlin",w:"https://www.possling.de",art:"laden",k:"unbekannt",pr:"ja",t:"Tischlerholz, Balken, Hobelware; drei Fachmärkte in Britz, Charlottenburg und Mahlsdorf.",te:"Joinery timber, beams, planed timber; three timber stores in Britz, Charlottenburg and Mahlsdorf.",lat:52.46,lon:13.46,q:"https://www.possling.de/",si:"hoch"},
+ {n:"Holzhandel Böhlen",c:"wood",s:"Holzfachhandel",a:"Werkstraße 5",p:"04564",o:"Böhlen",w:"https://www.holzhandel-boehlen.de/Page/",art:"beides",k:"unbekannt",pr:"ja",t:"Lager mit Shop vor Ort und Onlineshop, rund 30 Holzsorten.",te:"Warehouse with on-site shop and online shop, around 30 wood types.",lat:51.20,lon:12.39,q:"https://www.holzhandel-boehlen.de/Page/",si:"mittel"},
+ {n:"WHG Coswig",c:"wood",s:"Holzfachhandel",a:"Naundorfer Straße 1c",p:"01640",o:"Coswig",w:"http://www.whg-coswig.de",art:"laden",k:"unbekannt",pr:"ja",t:"Massivholzdielen, Robinie, Holzbau; für Handwerk und Heimwerker.",te:"Solid wood floorboards, robinia, timber construction; for tradespeople and DIY customers.",lat:51.13,lon:13.58,q:"http://www.whg-coswig.de/",si:"mittel"},
+ {n:"Otto Höttcke",c:"wood",s:"Holzfachhandel",a:"Butenlandwehr 55",p:"59368",o:"Werne",w:"https://www.hoettcke-holz.de",art:"laden",k:"unbekannt",pr:"ja",t:"Schnittholz, Hobelware, Böden, Türen; Ausstellung.",te:"Sawn timber, planed timber, flooring, doors; showroom.",lat:51.66,lon:7.63,q:"https://www.hoettcke-holz.de/",si:"mittel"},
+ {n:"Holz Scherf",c:"wood",s:"Holzfachhandel",a:"In den Bremen 38-44",p:"52152",o:"Simmerath",w:"https://www.scherf-gruppe.de",art:"laden",k:"unbekannt",pr:"ja",t:"Massivholzplatten, Dielen, Schnittholz für Profis und Privatkunden.",te:"Solid wood panels, floorboards, sawn timber for professionals and private customers.",lat:50.60,lon:6.30,q:"https://www.scherf-gruppe.de/",si:"mittel"},
+ {n:"HolzLand Schyns",c:"wood",s:"Holzfachhandel",a:"Industriestraße 21-25",p:"53721",o:"Siegburg",w:"http://www.holz-schyns.de",art:"laden",k:"unbekannt",pr:"ja",t:"Holzfachmarkt mit Zuschnitt und Endkundenbereich.",te:"Timber merchant with cutting to size and a section for end customers.",lat:50.80,lon:7.21,q:"http://www.holz-schyns.de",si:"mittel"},
+ {n:"Heinrich Blum",c:"wood",s:"Holzfachhandel",a:"Königsteiner Str. 9",p:"65197",o:"Wiesbaden",w:"https://www.holzblum.de",art:"laden",k:"unbekannt",pr:"ja",t:"Massivholz, Leimholz, Massivholzdielen für Heimwerker.",te:"Solid wood, glued laminated timber, solid wood floorboards for DIY customers.",lat:50.08,lon:8.21,q:"https://www.holzblum.de",si:"hoch"},
+ {n:"G. Schmidt Holzhandlung",c:"wood",s:"Sägewerk und Schnittholz",a:"Saganer Str. 33",p:"90475",o:"Nürnberg",w:"https://www.schmidtholz.de",art:"laden",k:"unbekannt",pr:"ja",t:"Laub- und Nadelschnittholz, kammergetrocknet, viel Eiche.",te:"Hardwood and softwood sawn timber, kiln-dried, plenty of oak.",lat:49.41,lon:11.18,q:"https://www.schmidtholz.de/",si:"mittel"},
+ {n:"Sägewerk Vater",c:"wood",s:"Sägewerk und Schnittholz",a:"Am Güßgraben 7",p:"97225",o:"Retzbach",w:"http://www.saegewerk-vater.de",art:"laden",k:"unbekannt",pr:"unklar",t:"Laubholz, vor allem Eiche: Schnittholz und Blockware.",te:"Hardwood, mainly oak: sawn timber and log-sawn boards.",lat:49.91,lon:9.82,q:"http://www.saegewerk-vater.de/",si:"mittel"},
+ {n:"Holzwerk Haidt",c:"wood",s:"Sägewerk und Schnittholz",a:"Gewerbegebiet Haidt 1",p:"97355",o:"Kleinlangheim",w:"https://www.holzwerk-haidt.de",art:"laden",k:"unbekannt",pr:"ja",t:"Sägewerk und Holzhandel: Blockware, Schreinerware, Dielen.",te:"Sawmill and timber trade: log-sawn boards, joinery timber, floorboards.",lat:49.77,lon:10.28,q:"https://www.holzwerk-haidt.de/",si:"mittel"},
+ {n:"Die SägeWerker",c:"wood",s:"Sägewerk und Schnittholz",a:"Rißstraße 35/1",p:"89584",o:"Ehingen (Donau)",w:"https://www.xn--diesgewerker-jcb.de",art:"beides",k:"unbekannt",pr:"unklar",t:"Bohlen, Bretter, Balken direkt vom Sägewerk; Lohnsägen.",te:"Planks, boards, beams direct from the sawmill; custom sawing.",lat:48.28,lon:9.72,q:"https://www.xn--diesgewerker-jcb.de/impressum",si:"mittel"},
+ {n:"Mobilsägewerk Baden-Württemberg",c:"wood",s:"Sägewerk und Schnittholz",a:"Hohenheimer Str. 68",p:"70771",o:"Leinfelden-Echterdingen",w:"https://www.mobilsaege-bw.de/en/wood-trade-stuttgart/",art:"laden",k:"unbekannt",pr:"ja",t:"Regionale Bohlen, Tischplatten-Rohlinge, Baumscheiben; Besuch nach Termin.",te:"Regional planks, tabletop blanks, tree slabs; visits by appointment.",lat:48.69,lon:9.16,q:"https://www.mobilsaege-bw.de/en/wood-trade-stuttgart/",si:"mittel"},
+ {n:"BILDHAU",c:"tool",s:"Löffelschnitzen",a:"Am Rankewerk 4",p:"50321",o:"Brühl",w:"https://www.bildhau.de",art:"beides",k:"ja",t:"Bildhauerbedarf mit Laden: Pfeil-Löffelmesser, Mora 106/120/122, Flexcut-Höhlmesser, BeaverCraft, dazu Ziehmesser, Beile, Abziehleder; Workshops.",te:"Carving supplies with shop: Pfeil spoon knives, Mora 106/120/122, Flexcut hook knives, BeaverCraft, plus drawknives, axes, strops; workshops.",lat:50.83,lon:6.90,q:"https://www.bildhau.de/de/schnitzmesser",si:"hoch"},
+ {n:"Messerbrief",c:"tool",s:"Löffelschnitzen",a:"Maierhofstr. 12",p:"94032",o:"Passau",w:"https://shop.messerbrief.de",art:"online",k:"unbekannt",t:"Eigene Kategorie Löffelschnitzmesser: Mora 162/163/164 (auch links), Narex Löffelmesser und Sloyd, BeaverCraft-Sets.",te:"Dedicated spoon carving knife category: Mora 162/163/164 (also left-handed), Narex spoon knives and Sloyd, BeaverCraft sets.",lat:48.57,lon:13.43,q:"https://shop.messerbrief.de/loffelschnitzmesser/",si:"hoch"},
+ {n:"Wolfknives Feines Werkzeug & Handwerk",c:"tool",s:"Löffelschnitzen",a:"Semptwiesen 1",p:"84174",o:"Eching (bei Landshut)",w:"https://www.feines-werkzeug.de",art:"online",k:"unbekannt",t:"Handgeschmiedete Löffelmesser von Svante Djärv, Mora 162/163/164/120, BeaverCraft, Gränsfors-Beile, Löffelrohlinge.",te:"Hand-forged spoon knives by Svante Djärv, Mora 162/163/164/120, BeaverCraft, Gränsfors axes, spoon blanks.",lat:48.53,lon:12.06,q:"https://www.feines-werkzeug.de/messer/schnitzmesser/",si:"hoch"},
+ {n:"Nordisches Handwerk",c:"tool",s:"Löffelschnitzen",a:"Carl-Gauß-Str. 3 b",p:"23562",o:"Lübeck",w:"https://www.nordisches-handwerk.de",art:"online",k:"unbekannt",t:"Skandinavien-Shop: Mora-Hakenmesser 162/163/164 mit Lederschutz, Mora- und BeaverCraft-Schnitzmesser, Löffel- und Kuksa-Rohlinge.",te:"Scandinavian shop: Mora hook knives 162/163/164 with leather sheath, Mora and BeaverCraft carving knives, spoon and kuksa blanks.",lat:53.87,lon:10.69,q:"https://www.nordisches-handwerk.de/messer-aexte/nordische-messer/morakniv-messer-schweden/mora-hook-schnitzmesser/",si:"hoch"},
+ {n:"Die Werkkiste",c:"tool",s:"Löffelschnitzen",a:"Stresemannstraße 268",p:"22769",o:"Hamburg",w:"https://www.die-werkkiste.de",art:"beides",k:"ja",t:"Werkstatt mit Laden und Kursen; kleines Schnitzsortiment: BeaverCraft-Löffelmesser, Zugmesser, Löffel- und Kuksa-Sets.",te:"Workshop with shop and courses; small carving range: BeaverCraft spoon knives, drawknives, spoon and kuksa sets.",lat:53.56,lon:9.94,q:"https://www.die-werkkiste.de/shop/schnitzen/",si:"mittel"}
+];
+// Nachbarländer (recherchiert)
+const N=[
+ {L:"AT",n:"Neureiter Zentrale Kuchl",c:"tool",s:"Drechselbedarf",a:"Kellau 167",p:"5431",o:"Kuchl",w:"https://neureiter-shop.at",art:"beides",k:"ja",t:"Großer Fachhändler für Drechseln, Schnitzen, Schärfen und Japanwerkzeug bei Salzburg; Onlineshop und Drechselkurse.",te:"Large specialist retailer for woodturning, carving, sharpening and Japanese tools near Salzburg; online shop and woodturning courses.",lat:47.63,lon:13.15,q:"https://neureiter-shop.at/impressum/",si:"hoch"},
+ {L:"AT",n:"Neureiter Niederlassung Söding",c:"tool",s:"Drechselbedarf",a:"Packerstraße 169",p:"8561",o:"Söding",w:"https://neureiter-shop.at",art:"beides",k:"ja",t:"Steirische Niederlassung bei Graz: Handwerkzeug, Japanwerkzeug, Drechselbedarf, Schärfsysteme.",te:"Styrian branch near Graz: hand tools, Japanese tools, woodturning supplies, sharpening systems.",lat:47.01,lon:15.26,q:"https://neureiter-shop.at/impressum/",si:"mittel"},
+ {L:"AT",n:"MAGMA",c:"tool",s:"Handwerkzeug",a:"Schloßstraße 35",p:"4971",o:"Aurolzmünster",w:"https://www.magma-tools.com",art:"beides",k:"ja",t:"Japanische Handwerkzeuge, Schnitzwerkzeug, Hobelbänke, Schärfzubehör, Drechselbedarf; Drechselkurse im Haus.",te:"Japanese hand tools, carving tools, workbenches, sharpening accessories, woodturning supplies; woodturning courses on site.",lat:48.25,lon:13.46,q:"https://www.magma-tools.com/de/impressum-magma-4856.html",si:"hoch"},
+ {L:"AT",n:"Precarv / Schnitzschule Geisler-Moroder",c:"tool",s:"Handwerkzeug",a:"Dorf 63",p:"6652",o:"Elbigenalp",w:"https://www.schnitzeisen.at",art:"beides",k:"ja",t:"Fachgeschäft für Schnitz-, Bildhauer- und Drechselbedarf im Lechtal, mit Schnitzschule.",te:"Specialist shop for carving, sculpting and woodturning supplies in the Lechtal, with a carving school.",lat:47.29,lon:10.44,q:"https://www.schnitzeisen.at/impressum",si:"hoch"},
+ {L:"AT",n:"Drechselshop Kramer",c:"tool",s:"Drechselbedarf",a:"Am Sportplatz 275",p:"2014",o:"Breitenwaida",w:"https://www.drechselshop-kramer.com",art:"beides",k:"unbekannt",t:"Drechselbedarf, Schnitzwerkzeug und Zubehör im Weinviertel; Laden Mi–Fr nachmittags, sonst nach Anmeldung.",te:"Woodturning supplies, carving tools and accessories in the Weinviertel; shop open Wed–Fri afternoons, otherwise by registration.",lat:48.51,lon:16.06,q:"https://www.drechselshop-kramer.com/impressum",si:"mittel"},
+ {L:"CH",n:"ANSWERK fine woodworking",c:"tool",s:"Handwerkzeug",a:"Tösstalstrasse 96",p:"8496",o:"Steg im Tösstal",w:"https://www.answerk.ch",art:"beides",k:"ja",t:"Japanische Handwerkzeuge, Veritas-Hobel, Schnitzwerkzeug, Schärfsysteme, Drechselbedarf; Laden und Kurse.",te:"Japanese hand tools, Veritas planes, carving tools, sharpening systems, woodturning supplies; shop and courses.",lat:47.35,lon:8.94,q:"https://www.answerk.ch/Impressum",si:"hoch"},
+ {L:"CH",n:"Eigenmann Werkzeug",c:"tool",s:"Handwerkzeug",a:"Schwäntenmos 5",p:"8126",o:"Zumikon",w:"https://www.eigenmann-werkzeug.ch",art:"online",k:"unbekannt",t:"Japanische Sägen, Stechbeitel und Schärfsteine; der Shop nennt sich B2B-Shop.",te:"Japanese saws, chisels and sharpening stones; the shop calls itself a B2B shop.",lat:47.33,lon:8.62,q:"https://www.eigenmann-werkzeug.ch/impressum/",si:"mittel"},
+ {L:"NL",n:"Baptist voor Houtbewerkers",c:"tool",s:"Handwerkzeug",a:"Vlamoven 32",p:"6826 TN",o:"Arnhem",w:"https://www.baptist.nl",art:"beides",k:"ja",t:"Spezialladen seit 1984: Handwerkzeug, Lie-Nielsen, Japansägen; Werkstatt für Kurse.",te:"Specialist shop since 1984: hand tools, Lie-Nielsen, Japanese saws; workshop for courses.",lat:52.01,lon:5.86,q:"https://baptist.nl/en/pagina/our-shop",si:"hoch"},
+ {L:"NL",n:"Japansaegenshop.com (Toolz E-commerce)",c:"tool",s:"Handwerkzeug",a:"Lagedijkerweg 13N",p:"1742 NB",o:"Schagen",w:"https://www.japansaegenshop.com",art:"online",k:"nein",t:"Japanische Sägen, Stechbeitel, Hobel, Messwerkzeug und Schärfsteine; deutschsprachiger Shop.",te:"Japanese saws, chisels, planes, measuring tools and sharpening stones; German-language shop.",lat:52.79,lon:4.80,q:"https://www.japansaegenshop.com/kontakt/",si:"hoch"},
+ {L:"NL",n:"HoutID",c:"tool",s:"Handwerkzeug",a:"Meester Kunstweg 53",p:"7671 ED",o:"Vriezenveen",w:"https://houtid.nl",art:"online",k:"unbekannt",t:"Kleiner Shop für japanisches Werkzeug: Sägen, Stechbeitel, Kanna-Hobel, Hämmer.",te:"Small shop for Japanese tools: saws, chisels, kanna planes, hammers.",lat:52.41,lon:6.61,q:"https://houtid.nl/contact/",si:"mittel"},
+ {L:"NL",n:"Teygeler",c:"tool",s:"Handwerkzeug",a:"Industrieweg 47",p:"1521 NE",o:"Wormerveer",w:"https://teygeler.nl",art:"beides",k:"unbekannt",t:"Maschinenhändler mit Showroom für Handwerkzeug: Japansägen, Hobel, Beitel, Schleifsteine, DICTUM-Sortiment.",te:"Machinery dealer with a hand tool showroom: Japanese saws, planes, chisels, whetstones, DICTUM range.",lat:52.50,lon:4.79,q:"https://teygeler.nl/contact/",si:"mittel"},
+ {L:"BE",n:"Lignum Tools",c:"tool",s:"Handwerkzeug",a:"Mallekotstraat 63",p:"2500",o:"Lier",w:"https://www.lignumtools.be",art:"beides",k:"unbekannt",t:"Showroom und Webshop: Beitel, Hohleisen, Raspeln, Handsägen, auch Maschinen.",te:"Showroom and web shop: chisels, gouges, rasps, hand saws, also machines.",lat:51.12,lon:4.57,q:"https://www.lignumtools.be/",si:"mittel"},
+ {L:"BE",n:"Maene Houtbewerkingsmachines",c:"tool",s:"Handwerkzeug",a:"Industriepark Noord 12",p:"8730",o:"Beernem",w:"https://www.smaenemachines.be",art:"beides",k:"unbekannt",t:"Laden und Webshop mit Japansägen, Handhobeln, Stechbeiteln, Schnitzwerkzeug; Schwerpunkt Maschinen.",te:"Shop and web shop with Japanese saws, hand planes, chisels, carving tools; focus on machines.",lat:51.15,lon:3.34,q:"https://www.smaenemachines.be/contact/",si:"mittel"},
+ {L:"FR",n:"Gaignard Millon",c:"tool",s:"Handwerkzeug",a:"24 Rue Jules Vallès",p:"75011",o:"Paris",w:"https://www.gaignard-millon.com",art:"beides",k:"unbekannt",t:"Traditionsgeschäft seit 1875: Stechbeitel, Hobel, Schnitzwerkzeug, Japansägen und -beitel.",te:"Traditional business since 1875: chisels, planes, carving tools, Japanese saws and chisels.",lat:48.86,lon:2.38,q:"https://www.gaignard-millon.com/pages/contact",si:"hoch"},
+ {L:"FR",n:"Établissements Bordet",c:"tool",s:"Drechselbedarf",a:"98 rue Louis Ampère",p:"93330",o:"Neuilly-sur-Marne",w:"https://www.bordet.fr",art:"online",k:"unbekannt",t:"Bekannter Versender: Drechsel- und Schnitzwerkzeug, Tormek, Veritas, Narex, Hobelbänke.",te:"Well-known mail order company: woodturning and carving tools, Tormek, Veritas, Narex, workbenches.",lat:48.86,lon:2.54,q:"https://www.bordet.fr/Demande-de-contact",si:"hoch"},
+ {L:"DK",n:"Trædrejerbutikken",c:"tool",s:"Drechselbedarf",a:"Røjlevej 31",p:"5792",o:"Årslev",w:"https://traedrejerbutikken.dk",art:"beides",k:"ja",t:"Großes Drechselsortiment mit Sorby und Tormek, dazu Drechselholz in Stäben und Klötzen; Laden und Kurse.",te:"Large woodturning range with Sorby and Tormek, plus turning blanks as spindle and bowl blanks; shop and courses.",lat:55.30,lon:10.46,q:"https://traedrejerbutikken.dk/kontakt/",si:"hoch"},
+ {L:"PL",n:"Woodfan.pl",c:"tool",s:"Handwerkzeug",a:"ul. Hutnicza 22",p:"81-061",o:"Gdynia",w:"https://woodfan.pl",art:"online",k:"unbekannt",t:"Tischlerhandwerkzeug: Veritas, japanische Stechbeitel und Hobel, Sägen, Schärfzubehör.",te:"Joinery hand tools: Veritas, Japanese chisels and planes, saws, sharpening accessories.",lat:54.52,lon:18.53,q:"https://www.woodfan.pl/regulamin.html",si:"mittel"},
+ {L:"PL",n:"Dluta.pl (CILIO)",c:"tool",s:"Handwerkzeug",a:"ul. Powstańców Wlkp. 55",p:"62-053",o:"Drużyna (Mosina)",w:"https://dluta.pl",art:"beides",k:"ja",t:"Schnitz- und Tischlerbeitel, Veritas, Pfeil, Narex; Laden, Schärfservice, Schnitzworkshops.",te:"Carving and joinery chisels, Veritas, Pfeil, Narex; shop, sharpening service, carving workshops.",lat:52.20,lon:16.80,q:"https://dluta.pl/kontakt",si:"hoch"},
+ {L:"CZ",n:"Habilis Tools",c:"tool",s:"Handwerkzeug",a:"Sokolská 141",p:"252 25",o:"Jinočany",w:"https://www.truhlarske-nastroje.cz",art:"beides",k:"unbekannt",t:"Showroom bei Prag: japanische Sägen, Hobel, Beitel, Pfeil-Schnitzeisen, Schärfservice.",te:"Showroom near Prague: Japanese saws, planes, chisels, Pfeil carving gouges, sharpening service.",lat:50.03,lon:14.27,q:"https://www.truhlarske-nastroje.cz/sekce/kontakt/",si:"hoch"},
+ {L:"CZ",n:"Cesta Dřeva",c:"tool",s:"Handwerkzeug",a:"Lhůta 3",p:"583 01",o:"Libice nad Doubravou",w:"https://www.cestadreva.cz",art:"online",k:"unbekannt",t:"Traditionelle japanische Sägen, Zimmermanns- und Japanbeitel, Handhobel, Anreißwerkzeug.",te:"Traditional Japanese saws, carpenters' and Japanese chisels, hand planes, marking tools.",lat:49.64,lon:15.75,q:"https://www.cestadreva.cz/kontakt/",si:"hoch"},
+
+ {L:"NL",n:"Houthandel Polak",c:"wood",s:"Holzfachhandel",a:"Dirk de Botsdijk 1",p:"4926 SB",o:"Lage Zwaluwe",w:"https://www.houthandelpolak.nl",art:"laden",k:"unbekannt",pr:"ja",t:"Möbelholz von Eiche, Kirsche und Nussbaum bis Wengé und Padouk; Einzelbretter auch für Privatkunden.",te:"Furniture wood from oak, cherry and walnut to wenge and padauk; single boards also for private customers.",lat:51.70,lon:4.69,q:"https://www.houthandelpolak.nl/",si:"hoch"},
+ {L:"NL",n:"Arnhemse Fijnhouthandel",c:"wood",s:"Edelholz",a:"Driepoortenweg 12",p:"6827 BR",o:"Arnhem",w:"https://www.af.nl",art:"beides",k:"unbekannt",pr:"ja",t:"Rund 100 Holzarten, Exotenmagazin, Hobby-Dachboden mit Kleinteilen für Drechsler und Schnitzer.",te:"Around 100 wood species, exotics store, hobby loft with small pieces for woodturners and carvers.",lat:51.97,lon:5.94,q:"https://www.af.nl/plattegrond/",si:"hoch"},
+ {L:"NL",n:"Hard- en Zachthout",c:"wood",s:"Holzfachhandel",a:"Hoofdweg 74",p:"7371 AK",o:"Loenen (Gld)",w:"https://hardenzachthout.nl",art:"laden",k:"unbekannt",pr:"ja",t:"Holzhandel seit 1922, auch für Privatkunden; Nussbaum und andere heimische Laubhölzer.",te:"Timber merchant since 1922, also for private customers; walnut and other native hardwoods.",lat:52.10,lon:5.99,q:"https://hardenzachthout.nl/",si:"hoch"},
+ {L:"NL",n:"Amsterdamsche Fijnhouthandel",c:"wood",s:"Edelholz",a:"Minervahavenweg 14",p:"1013 AR",o:"Amsterdam",w:"https://www.fijnhout.nl",art:"laden",k:"unbekannt",pr:"ja",t:"Edelholzhandel seit 1898 mit eigenem Angebot für Privatkunden, auch für Instrumentenbauer.",te:"Fine-wood merchant since 1898 with its own offer for private customers, also for instrument makers.",lat:52.40,lon:4.87,q:"https://www.fijnhout.nl/",si:"mittel"},
+ {L:"BE",n:"Ecohout",c:"wood",s:"Holzfachhandel",a:"Léon Bekaertlaan 3 E",p:"9880",o:"Aalter",w:"https://ecohout.be",art:"beides",k:"unbekannt",pr:"ja",t:"Webshop mit Ausstellungsraum für Heimwerker: massives Möbelholz; Abholung samstags.",te:"Web shop with showroom for DIY customers: solid furniture wood; Saturday collection.",lat:51.09,lon:3.45,q:"https://ecohout.be/",si:"hoch"},
+ {L:"AT",n:"Keplinger",c:"wood",s:"Holzfachhandel",a:"Keplingerstrasse 2",p:"4050",o:"Traun",w:"https://www.keplinger.at",art:"laden",k:"unbekannt",pr:"ja",t:"Holzhandel bei Linz für Privat- und Profikunden, rund 100 Holzarten ab Lager, kammergetrocknet.",te:"Timber merchant near Linz for private and professional customers, around 100 wood species from stock, kiln-dried.",lat:48.22,lon:14.24,q:"https://www.keplinger.at/",si:"mittel"},
+ {L:"AT",n:"Tonewood Berkmann",c:"wood",s:"Tonholz",a:"Grindel 110",p:"6943",o:"Riefensberg",w:"https://tonewood-berkmann.at",art:"online",k:"unbekannt",pr:"unklar",t:"Tonholz aus Fichte und Ahorn für Geige, Cello und Bass, dazu Nussbaum.",te:"Tonewood from spruce and maple for violin, cello and bass, plus walnut.",lat:47.51,lon:9.88,q:"https://tonewood-berkmann.at/",si:"mittel"},
+ {L:"AT",n:"Naturholz (Sägewerk Thomas Huber)",c:"wood",s:"Tonholz",a:"Pettendorf 15",p:"3334",o:"Gaflenz",w:"https://www.naturholz.at",art:"laden",k:"unbekannt",pr:"unklar",t:"Riegelahorn, Birne und Haselfichte für den Instrumentenbau; Besucher willkommen.",te:"Flame maple, pear and bearclaw spruce (Haselfichte) for instrument making; visitors welcome.",lat:47.87,lon:14.55,q:"https://www.naturholz.at/",si:"mittel"},
+ {L:"CH",n:"HedingerHolz",c:"wood",s:"Sägewerk und Schnittholz",a:"Sägereistrasse 8",p:"8217",o:"Wilchingen",w:"https://hedingerholz.ch",art:"laden",k:"unbekannt",pr:"ja",t:"Sägewerk mit Bereich für Privatkunden: Einzelzuschnitt, Bretter, Hobelware.",te:"Sawmill with a section for private customers: individual cuts, boards, planed timber.",lat:47.67,lon:8.46,q:"https://hedingerholz.ch/ihre-beduerfnisse/fuer-private/",si:"mittel"},
+ {L:"CH",n:"Holzhandel Winterthur",c:"wood",s:"Edelholz",a:"Tobelstrasse 25",p:"8400",o:"Winterthur",w:"https://holzhandel-winterthur.ch",art:"laden",k:"unbekannt",pr:"ja",t:"Seltene Schweizer Hölzer wie Nussbaum, lufttrocken und brettweise; Preise auf der Website.",te:"Rare Swiss woods such as walnut, air-dried and by the board; prices on the website.",lat:47.50,lon:8.72,q:"https://holzhandel-winterthur.ch/",si:"mittel"},
+ {L:"CH",n:"Florinett Tonewood Switzerland",c:"wood",s:"Tonholz",a:"",p:"7482",o:"Bergün",w:"https://www.tonewood.ch",art:"online",k:"unbekannt",pr:"unklar",t:"Fichten-Resonanzholz und Tonholz für Gitarre, Geige, Klavier und Harfe; Versand.",te:"Spruce resonance wood and tonewood for guitar, violin, piano and harp; mail order.",lat:46.63,lon:9.74,q:"https://www.tonewood.ch/",si:"mittel"},
+ {L:"FR",n:"Engler Bois",c:"wood",s:"Sägewerk und Schnittholz",a:"9002 Grand Rue",p:"67190",o:"Still",w:"https://www.engler-bois.fr",art:"laden",k:"unbekannt",pr:"ja",t:"Rohholz in Bohlen und Brettern, über 25 Holzarten, für Schreiner und Privatleute.",te:"Raw timber as planks and boards, over 25 wood species, for joiners and private customers.",lat:48.55,lon:7.47,q:"https://www.engler-bois.fr/mentions-legales/",si:"mittel"},
+ {L:"FR",n:"BOIS52-3APL",c:"wood",s:"Drechsel- und Schnitzholz",a:"5 route de Rizaucourt, Argentolles",p:"52330",o:"Colombey-les-Deux-Églises",w:"https://www.bois52-3apl.fr",art:"online",k:"unbekannt",pr:"unklar",t:"Edel- und Halbedelhölzer in Kleinformaten für Messerbau, Drechseln, Instrumenten- und Bogenbau.",te:"Fine and semi-fine woods in small formats for knife making, woodturning, instrument and bow making.",lat:48.33,lon:4.89,q:"https://www.bois52-3apl.fr/informations-legales.html",si:"mittel"},
+ {L:"DK",n:"Hvalsø Savværk",c:"wood",s:"Sägewerk und Schnittholz",a:"Bentsensvej 4",p:"4330",o:"Hvalsø",w:"https://sawmill.dk",art:"laden",k:"unbekannt",pr:"ja",t:"Sägewerk mit Detailverkauf: Eichenbohlen, Hartholz, Azobé; Bretter direkt mitnehmen.",te:"Sawmill with retail sales: oak planks, hardwood, azobé; take boards away directly.",lat:55.60,lon:11.86,q:"https://sawmill.dk/",si:"mittel"},
+ {L:"DK",n:"Wood By Nymand",c:"wood",s:"Edelholz",a:"Leddet 4",p:"9800",o:"Hjørring",w:"https://woodbynymand.dk",art:"beides",k:"unbekannt",pr:"ja",t:"Ofentrockene Planken, vor allem Eiche, auf Anfrage Walnuss, Wenge, Padauk; Zuschnitt und Versand.",te:"Kiln-dried planks, mainly oak, on request walnut, wenge, padauk; cutting to size and mail order.",lat:57.46,lon:9.98,q:"https://woodbynymand.dk/planker/",si:"mittel"},
+ {L:"DK",n:"Linå",c:"wood",s:"Drechsel- und Schnitzholz",a:"Bergsøesvej 11",p:"8600",o:"Silkeborg",w:"https://www.linaa.dk",art:"online",k:"unbekannt",pr:"ja",t:"Webshop mit exotischem Holz, Planken und trockenen Drechselrohlingen; Versand in Dänemark.",te:"Web shop with exotic wood, planks and dry turning blanks; shipping within Denmark.",lat:56.17,lon:9.55,q:"https://companydata.dk/en/virksomhed/25790294-linaa-a-s",si:"mittel"},
+ {L:"CZ",n:"WOOD STORE",c:"wood",s:"Edelholz",a:"Mělnická 109",p:"250 65",o:"Bořanovice",w:"https://www.wood-shop.cz/en/",art:"beides",k:"unbekannt",pr:"ja",t:"Verkaufslager bei Prag mit E-Shop: exotische Bohlen und Bretter; Abholung samstags.",te:"Sales warehouse near Prague with e-shop: exotic planks and boards; Saturday collection.",lat:50.20,lon:14.47,q:"https://www.palubky-rezivo.eu/exoticke-rezivo/",si:"hoch"},
+ {L:"CZ",n:"Pavel Celý (pro-rezbare.cz)",c:"wood",s:"Drechsel- und Schnitzholz",a:"Vaneč 9",p:"675 71",o:"Náměšť nad Oslavou",w:"https://www.pro-rezbare.cz",art:"online",k:"unbekannt",pr:"unklar",t:"Shop für Schnitzer und Geigenbauer mit exotischen Hölzern und Zuschnitten für Schalen.",te:"Shop for carvers and violin makers with exotic woods and blanks for bowls.",lat:49.21,lon:16.16,q:"https://www.pro-rezbare.cz/Kontakty.aspx",si:"mittel"},
+ {L:"PL",n:"Sklep Tokarza",c:"wood",s:"Drechsel- und Schnitzholz",a:"ul. Prudnicka 21",p:"47-300",o:"Steblów",w:"https://skleptokarza.pl",art:"beides",k:"ja",pr:"ja",t:"Drechslershop mit heimischem und exotischem Holz, Abholung nach Anruf, Drechselkurse.",te:"Woodturner's shop with native and exotic wood, collection after a phone call, woodturning courses.",lat:50.47,lon:17.97,q:"https://skleptokarza.pl/kontakt-i-dojazd",si:"mittel"},
+ {L:"PL",n:"Virgin Wood",c:"wood",s:"Drechsel- und Schnitzholz",a:"Piasta 5",p:"88-140",o:"Gniewkowo",w:"https://virginwood.pl",art:"online",k:"unbekannt",pr:"unklar",t:"Über 260 Drechselhölzer, heimisch und exotisch; Versand in die EU.",te:"Over 260 turning woods, native and exotic; shipping within the EU.",lat:52.90,lon:18.41,q:"https://virginwood.pl/pl/i/Kontakt-i-adres-firmy/9",si:"mittel"},
+ {L:"CH",n:"Outdoorfeeling (Scandinavian Outdoor Shop)",c:"tool",s:"Löffelschnitzen",a:"Zürichstr. 22",p:"8184",o:"Bachenbülach",w:"https://outdoorfeeling.ch",art:"beides",k:"unbekannt",t:"Laden und Onlineshop: Mora 162/163/164 und 106/120/122, Pfeil-Löffelmesser, Gränsfors-Schnitzbeil.",te:"Shop and online shop: Mora 162/163/164 and 106/120/122, Pfeil spoon knives, Gränsfors carving axe.",lat:47.50,lon:8.54,q:"https://outdoorfeeling.ch/collections/schnitzmesser",si:"hoch"},
+ {L:"AT",n:"Franz Musicks Enkelin",c:"tool",s:"Löffelschnitzen",a:"Lindengasse 30",p:"1070",o:"Wien",w:"https://www.musick.at",art:"beides",k:"unbekannt",t:"Messer- und Schleiffachgeschäft mit Kategorie Schnitzen; Mora-Löffelmesser 164 belegt, übriges Sortiment nicht geprüft.",te:"Knife and sharpening specialist with a carving category; Mora spoon knife 164 confirmed, rest of the range not checked.",lat:48.20,lon:16.35,q:"https://www.musick.at/product/Mora-Loffelschnitzmesser-164-links",si:"mittel"},
+ {L:"NL",n:"Carolina's Slöjd",c:"tool",s:"Löffelschnitzen",a:"JJP Oudkwartier 66",p:"3723 ZH",o:"Bilthoven",w:"https://slojd.nl",art:"online",k:"ja",t:"Spooncarving-Shop mit Workshops: Wood-Tools-Löffelmesser von Robin & JoJo Wood (Compound, Deep, Open Curve), Robin-Wood-Beil, Gutsen, Schärfzubehör.",te:"Spoon carving shop with workshops: Wood Tools spoon knives by Robin & JoJo Wood (Compound, Deep, Open Curve), Robin Wood axe, gouges, sharpening accessories.",lat:52.13,lon:5.20,q:"https://slojd.nl/product-category/gereedschap/wood-tools/",si:"hoch"},
+ {L:"NL",n:"Hout van Bomen",c:"tool",s:"Löffelschnitzen",a:"Stuurmankade 18",p:"1019 KR",o:"Amsterdam",w:"https://houtvanbomen.com",art:"online",k:"ja",t:"Grünholz-Spezialist: Hans Karlsson (Löffelmesser, Beil, Dechsel, Gutsen), Robin-Wood-Beile, Mora 164 und 106, DMT; Workshops Löffel und Kåsa.",te:"Greenwood specialist: Hans Karlsson (spoon knives, axe, adze, gouges), Robin Wood axes, Mora 164 and 106, DMT; spoon and kåsa workshops.",lat:52.38,lon:4.92,q:"https://houtvanbomen.com/webshop/",si:"hoch"},
+ {L:"NL",n:"Bushpappa",c:"tool",s:"Löffelschnitzen",a:"Walserij 43",p:"2211 SJ",o:"Noordwijkerhout",w:"https://www.bushpappa.nl",art:"online",k:"ja",t:"Bushcraft-Shop mit Carving-Abteilung: Mora 162/163/164, BeaverCraft, Wood Tools Open Curve, Ziehmesser, Schnitzbeil, Gutsen; Kurse.",te:"Bushcraft shop with a carving department: Mora 162/163/164, BeaverCraft, Wood Tools Open Curve, drawknives, carving axe, gouges; courses.",lat:52.26,lon:4.49,q:"https://www.bushpappa.nl/nl/gereedschappen/carving-tools/lepelmessen/",si:"hoch"},
+ {L:"NL",n:"Jaak van Wijck",c:"tool",s:"Löffelschnitzen",a:"Ginnekenweg 146",p:"4818 JK",o:"Breda",w:"https://jaakvanwijck.nl",art:"beides",k:"unbekannt",t:"Werkzeuggeschäft seit 1938 mit Webshop: Narex-Löffelschnitzset und Gutsen, BeaverCraft-Löffelmesser.",te:"Tool shop since 1938 with web shop: Narex spoon carving set and gouges, BeaverCraft spoon knives.",lat:51.58,lon:4.78,q:"https://jaakvanwijck.nl/webshop/product/narex-set-lepel-snijden/",si:"hoch"},
+ {L:"NL",n:"Baptist",c:"tool",s:"Löffelschnitzen",a:"Vlamoven 32",p:"6826 TN",o:"Arnhem",w:"https://baptist.nl",art:"beides",k:"ja",t:"Laden für Holzwerker mit Workshops: Mora 162/163/164 und 106/120/122, BeaverCraft-Sets, Narex-Startset, Pfeil.",te:"Shop for woodworkers with workshops: Mora 162/163/164 and 106/120/122, BeaverCraft sets, Narex starter set, Pfeil.",lat:51.97,lon:5.92,q:"https://baptist.nl/en/woodcarving/wood-carving-knives",si:"hoch"},
+ {L:"NL",n:"Knivesandtools",c:"tool",s:"Löffelschnitzen",a:"Laan van Westenenk 8",p:"7336 AZ",o:"Apeldoorn",w:"https://www.knivesandtools.nl",art:"beides",k:"unbekannt",t:"Großer Messerhändler mit Laden: rund 20 Löffelmesser von BeaverCraft, Mora (162/163/164) und Narex.",te:"Large knife retailer with shop: around 20 spoon knives from BeaverCraft, Mora (162/163/164) and Narex.",lat:52.19,lon:5.94,q:"https://www.knivesandtools.nl/nl/ct/lepelmessen.htm",si:"hoch"},
+ {L:"BE",n:"Het Lepelhuis",c:"tool",s:"Löffelschnitzen",a:"Torhoutse Steenweg 74",p:"8200",o:"Sint-Andries (Brugge)",w:"https://lepelhuis.be",art:"beides",k:"ja",t:"Atelier mit kleinem Laden und Webshop für Schnitz- und Bushcraft-Werkzeug; Jahreskurs Grünholz und Löffelschnitzen. Marken nicht genannt.",te:"Studio with small shop and web shop for carving and bushcraft tools; year-long course in greenwood and spoon carving. Brands not stated.",lat:51.20,lon:3.18,q:"https://lepelhuis.be/webwinkel.html",si:"mittel"},
+ {L:"DK",n:"Bushcraftbutikken",c:"tool",s:"Löffelschnitzen",a:"Blæsingevej 24",p:"4200",o:"Slagelse",w:"https://bushcraftbutikken.dk",art:"online",k:"nein",t:"Snitteværktøj: Mora 162/163/164 auch mit Lederscheide, Mora 105/106/120, Narex-Löffelmesser und Sloyd, Hultafors-Beil.",te:"Carving tools: Mora 162/163/164 also with leather sheath, Mora 105/106/120, Narex spoon knives and Sloyd, Hultafors axe.",lat:55.40,lon:11.35,q:"https://bushcraftbutikken.dk/collections/snittevaerktoj",si:"hoch"},
+ {L:"PL",n:"Laplander.pl",c:"tool",s:"Löffelschnitzen",a:"ul. Leśny Zakątek 2",p:"05-126",o:"Stanisławów Pierwszy",w:"https://laplander.pl",art:"beides",k:"unbekannt",t:"Bushcraft-Shop mit Laden: Löffelmesser von Mora (162/163/164), BeaverCraft und Narex.",te:"Bushcraft shop with store: spoon knives from Mora (162/163/164), BeaverCraft and Narex.",lat:52.45,lon:21.06,q:"https://laplander.pl/pol_m_Noze-i-narzedzia_Noze-do-rzezbienia_Noze-lyzkowe-509.html",si:"hoch"},
+ {L:"CZ",n:"4knife.cz",c:"tool",s:"Löffelschnitzen",a:"Adamova 471/13",p:"162 00",o:"Praha 6",w:"https://www.4knife.cz",art:"beides",k:"unbekannt",t:"Löffelmesser von BeaverCraft (verschiedene Radien, auch links) und Mora 162/163/164.",te:"Spoon knives from BeaverCraft (various radii, also left-handed) and Mora 162/163/164.",lat:50.10,lon:14.35,q:"https://www.4knife.cz/lzickarske-noze/",si:"hoch"},
+ {L:"FR",n:"Bois et Toile",c:"tool",s:"Löffelschnitzen",a:"La Couture",p:"56350",o:"Allaire",w:"https://www.boistoile.fr",art:"online",k:"ja",t:"Löffelschnitzer mit Shop: Mora 164, 106 und 120, BeaverCraft, Sets mit Beil; Tageskurse Löffelschnitzen vor Ort.",te:"Spoon carver with a shop: Mora 164, 106 and 120, BeaverCraft, kits with an axe; one-day spoon carving courses on site.",lat:47.64,lon:-2.16,q:"https://www.boistoile.fr/boutique/Couteaux-Sculpture-dustensiles-c170502533",si:"hoch"},
+ {L:"GB",n:"Workshop Heaven",c:"tool",s:"Handwerkzeug",a:"Unit 5, Alkerton Oaks Business Park, Stratford Road",p:"OX15 6EP",o:"Banbury",w:"https://www.workshopheaven.com",art:"online",k:"unbekannt",t:"Feine westliche und japanische Handwerkzeuge, Hobel, Stechbeitel, Schärfzubehör und Grünholzwerkzeug; Abholung nach Absprache.",te:"Fine Western and Japanese hand tools, planes, chisels, sharpening gear and green woodworking tools; collection by arrangement.",lat:52.09,lon:-1.45,q:"https://www.workshopheaven.com/contact-us",si:"hoch"},
+ {L:"GB",n:"Classic Hand Tools",c:"tool",s:"Handwerkzeug",sp:1,a:"Unit B, Hill Farm Business Park",p:"IP6 9EW",o:"Witnesham, Ipswich",w:"https://www.classichandtools.com",art:"beides",k:"nein",t:"Hochwertige Handwerkzeuge (u. a. Lie-Nielsen, Clifton), Schnitz- und Löffelmesser, Schärfen; Showroom nach Anruf.",te:"High-end hand tools (incl. Lie-Nielsen, Clifton), carving and spoon knives, sharpening; showroom visits after a call.",lat:52.11,lon:1.18,q:"https://www.classichandtools.com/contact-us",si:"hoch"},
+ {L:"GB",n:"Thomas Flinn & Co.",c:"tool",s:"Handwerkzeug",a:"114 Harvest Lane",p:"S3 8EG",o:"Sheffield",w:"https://www.flinn-garlick-saws.co.uk",art:"online",k:"nein",t:"Sägenhersteller (Pax, Garlick) mit Clifton-Hobeln, Stechbeiteln, Drechsel- und Grünholzwerkzeug; kein Laden, Click & Collect.",te:"Saw maker (Pax, Garlick) also selling Clifton planes, chisels, turning and green woodworking tools; no shop, click and collect.",lat:53.39,lon:-1.47,q:"https://www.flinn-garlick-saws.co.uk/",si:"hoch"},
+ {L:"GB",n:"Toolnut",c:"tool",s:"Handwerkzeug",a:"Unit 7, Beeching Close",p:"TN39 3YF",o:"Bexhill-on-Sea",w:"https://www.toolnut.co.uk",art:"online",k:"unbekannt",t:"Großes Sortiment englischer Schnitzeisen (Ashley Iles, Henry Taylor) und Handwerkzeug im Versand.",te:"Large range of English-made carving tools (Ashley Iles, Henry Taylor) and hand tools by mail order.",lat:50.85,lon:0.45,q:"https://www.toolnut.co.uk/pages/about-toolnut",si:"mittel"},
+ {L:"GB",n:"Axminster Tools (Laden Axminster)",c:"tool",s:"Handwerkzeug",a:"Unit 9A Weycroft Avenue",p:"EX13 5PH",o:"Axminster",w:"https://www.axminstertools.com",art:"beides",k:"ja",t:"Großer Fachmarkt für Hand- und Grünholzwerkzeug, Drechselbedarf und Zubehör mit Veranstaltungen im Laden; Firma seit 10/2025 in Administration.",te:"Large store for hand and green woodworking tools, turning supplies and accessories with in-store events; company in administration since Oct 2025.",lat:50.79,lon:-2.98,q:"https://www.axminstertools.com/stores/axminster",si:"mittel"},
+ {L:"GB",n:"Greenvill Crafts",c:"tool",s:"Drechselbedarf",a:"Unit 7A, Killinghall Business Park, Ripon Road",p:"HG3 2BA",o:"Harrogate",w:"https://www.greenvill.co.uk",art:"beides",k:"ja",t:"Drechselwerkzeug, Pen- und Schalenrohlinge, Pyrografie und Oberflächen, Laden mit Drechselkursen.",te:"Woodturning tools, pen and bowl blanks, pyrography and finishes; shop with woodturning courses.",lat:54.02,lon:-1.56,q:"https://www.greenvill.co.uk/info/about",si:"mittel"},
+ {L:"GB",n:"Turners Retreat",c:"tool",s:"Drechselbedarf",a:"c/o Robert Sorby, Atlas Way, Atlas North",p:"S4 7QQ",o:"Sheffield",w:"https://www.turners-retreat.co.uk",art:"online",k:"ja",t:"Drechsel- und Schärfwerkzeug, Rohlinge, Pen-Bausätze und Pyrografie; kein Laden mehr, Versand und Telefon.",te:"Turning and sharpening tools, blanks, pen kits and pyrography; no retail store, online and phone orders only.",lat:53.41,lon:-1.42,q:"https://www.turners-retreat.co.uk/contact-us",si:"mittel"},
+ {L:"GB",n:"The Wood Shed",c:"tool",s:"Drechselbedarf",a:"11 Lowtown Road",p:"BT39 0HD",o:"Templepatrick",w:"https://wood-shed.co.uk",art:"beides",k:"ja",t:"Drechsel- und Schnitzwerkzeug, heimische und exotische Hölzer, Rohlinge und Oberflächenmittel.",te:"Turning and carving tools, native and exotic timbers, blanks and finishes.",lat:54.70,lon:-6.10,q:"https://wood-shed.co.uk/",si:"mittel"},
+ {L:"GB",n:"Wood Tools (Robin & JoJo Wood)",c:"tool",s:"Löffelschnitzen",a:"",p:"",o:"Sheffield",w:"https://wood-tools.co.uk",art:"online",k:"unbekannt",t:"In Sheffield gefertigte Löffelmesser, Schnitzmesser und Beile von Robin und JoJo Wood.",te:"Sheffield-made spoon knives, carving knives and axes by Robin and JoJo Wood.",lat:53.36,lon:-1.50,q:"https://wood-tools.co.uk/contact-wood-tools/",si:"mittel"},
+ {L:"GB",n:"Nic Westermann",c:"tool",s:"Löffelschnitzen",a:"Unit 7, Cemmaes Road",p:"SY20 8LY",o:"Machynlleth",w:"https://www.nicwestermann.co.uk",art:"online",k:"ja",t:"Handgeschmiedete Grünholzwerkzeuge (Löffelmesser, Beile, Dechsel), Schärfservice und Kurse.",te:"Hand-forged green woodworking tools (spoon knives, axes, adzes), sharpening service and courses.",lat:52.64,lon:-3.73,q:"https://www.nicwestermann.co.uk/contact/",si:"hoch"},
+ {L:"GB",n:"Woodland Ways",c:"tool",s:"Löffelschnitzen",a:"Holly House Barn, Bakewell Road, Rowsley",p:"DE4 2EB",o:"Matlock",w:"https://woodland-ways.co.uk",art:"online",k:"ja",t:"Bushcraft-Anbieter mit Shop für Löffelmesser (u. a. Wood Tools) und Kursen im Löffelschnitzen.",te:"Bushcraft provider with a shop for spoon knives (incl. Wood Tools) and spoon carving courses.",lat:53.19,lon:-1.62,q:"https://woodland-ways.co.uk/policies/terms-of-service",si:"hoch"},
+ {L:"GB",n:"Yandle & Sons",c:"wood",s:"Holzfachhandel",a:"Hurst Works, Hurst",p:"TA12 6JU",o:"Martock",w:"https://www.yandles.co.uk",art:"beides",k:"ja",pr:"ja",t:"Sägewerk mit Selbstauswahl (über 60 Holzarten, Drechselrohlinge), Werkzeugladen und Kursen.",te:"Sawmill with self-select timber (60+ species, turning blanks), tool shop and courses.",lat:50.96,lon:-2.77,q:"https://find-and-update.company-information.service.gov.uk/company/00339069",si:"hoch"},
+ {L:"GB",n:"English Woodlands Timber",c:"wood",s:"Sägewerk und Schnittholz",a:"Cocking Sawmills, Cocking",p:"GU29 0HS",o:"Midhurst",w:"https://www.englishwoodlandstimber.co.uk",art:"laden",k:"nein",pr:"unklar",t:"Britische Laubhölzer (Eiche, Esche, Ulme, Nuss, Eibe) als Bohlen und Balken; Timber Rack mit Besucherzeiten.",te:"British hardwoods (oak, ash, elm, walnut, yew) as boards and beams; Timber Rack with visiting hours.",lat:50.95,lon:-0.75,q:"https://www.englishwoodlandstimber.co.uk/contact-us/",si:"mittel"},
+ {L:"GB",n:"Whitmore's Timber",c:"wood",s:"Holzfachhandel",a:"Main Road, Claybrooke Magna",p:"LE17 5AQ",o:"Lutterworth",w:"https://whitmores.co.uk",art:"online",k:"nein",pr:"ja",t:"Europäische, amerikanische und tropische Laubhölzer sowie Schnitz- und Drechselrohlinge, Onlineshop Whitmores Direct.",te:"European, American and tropical hardwoods plus carving and turning blanks, online shop Whitmores Direct.",lat:52.50,lon:-1.29,q:"https://whitmores.co.uk/",si:"mittel"},
+ {L:"GB",n:"Scawton Sawmill",c:"wood",s:"Sägewerk und Schnittholz",a:"The Sawmill, Scawton",p:"YO7 2HG",o:"Thirsk",w:"https://www.scawtonsawmill.co.uk",art:"laden",k:"nein",pr:"ja",t:"Luft- und kammergetrocknete Eiche sowie weitere europäische Laubhölzer.",te:"Air- and kiln-dried oak plus other European hardwoods.",lat:54.24,lon:-1.16,q:"https://find-and-update.company-information.service.gov.uk/company/08302881",si:"mittel"},
+ {L:"GB",n:"Surrey Timbers",c:"wood",s:"Edelholz",a:"Unit 5, Home Farm, Loseley Park",p:"GU3 1HS",o:"Guildford",w:"https://www.surreytimbers.co.uk",art:"beides",k:"nein",pr:"ja",t:"Heimische und exotische Edelhölzer, Baumkantenbohlen, Dünnholz, Drechselrohlinge und Instrumententeile mit Showroom.",te:"Local and exotic hardwoods, live-edge slabs, thins, turning blanks and instrument parts, with showroom.",lat:51.21,lon:-0.60,q:"https://www.surreytimbers.co.uk/",si:"hoch"},
+ {L:"GB",n:"Timberline (Exotic Hardwoods)",c:"wood",s:"Tonholz",a:"Unit 7, Munday Industrial Estate, 58-66 Morley Road",p:"TN9 1RA",o:"Tonbridge",w:"https://www.exotichardwoods.co.uk",art:"beides",k:"nein",pr:"ja",t:"Tonhölzer für Gitarrenbau, Edelhölzer, Furniere, Intarsien und Drechselrohlinge, auch im Versand.",te:"Tonewoods for guitar makers, specialist hardwoods, veneers, inlays and turning blanks, also by mail order.",lat:51.20,lon:0.28,q:"https://shop.exotichardwoods.co.uk/",si:"hoch"},
+ {L:"GB",n:"Touchstone Tonewoods",c:"wood",s:"Tonholz",a:"44 Albert Road North",p:"RH2 9EZ",o:"Reigate",w:"https://www.touchstonetonewoods.co.uk",art:"online",k:"nein",pr:"ja",t:"Tonhölzer, Werkzeug und Zubehör für Geigen- und Gitarrenbau im Onlineshop.",te:"Tonewoods, tools and supplies for violin and guitar making via online shop.",lat:51.24,lon:-0.21,q:"https://www.touchstonetonewoods.co.uk/",si:"mittel"},
+ {L:"GB",n:"Timberman",c:"wood",s:"Holzfachhandel",a:"Bronwydd",p:"SA33 6BE",o:"Carmarthen",w:"https://www.timberman.co.uk",art:"laden",k:"unbekannt",pr:"ja",t:"Heimische Laubhölzer, Schalenrohlinge, Oberflächenmittel sowie Drechselbänke und Werkzeug.",te:"Native hardwoods, bowl blanks, finishes plus lathes and tools.",lat:51.89,lon:-4.29,q:"https://www.timberman.co.uk/",si:"mittel"},
+ {L:"GB",n:"Scottish Wood",c:"wood",s:"Sägewerk und Schnittholz",a:"Inzievar, by Oakley",p:"KY12 8HB",o:"Dunfermline",w:"https://www.scottishwood.co.uk",art:"beides",k:"nein",pr:"ja",t:"Schottische Laubholzbretter aus eigenem Sägewerk, Reststücke, Drechselrohlinge und Maserknollen.",te:"Scottish hardwood boards from its own sawmill, offcuts, turning blanks and burrs.",lat:56.08,lon:-3.57,q:"https://www.scottishwood.co.uk/",si:"hoch"},
+ {L:"GB",n:"Logie Timber",c:"wood",s:"Sägewerk und Schnittholz",a:"Logie Steading, Dunphail",p:"IV36 2QN",o:"Forres",w:"https://logietimber.co.uk",art:"beides",k:"nein",pr:"ja",t:"Schottisches Möbel-Laubholz aus eigenem Sägewerk mit Laden und Musterraum („Boardroom“).",te:"Scottish furniture-grade hardwood from its own sawmill, with shop and sample room (the Boardroom).",lat:57.54,lon:-3.65,q:"https://logietimber.co.uk/the-boardroom/",si:"hoch"},
+ {L:"GB",n:"Real Wood Studios",c:"wood",s:"Sägewerk und Schnittholz",a:"Monteviot Nurseries, Ancrum",p:"TD8 6TU",o:"Jedburgh",w:"https://realwoodstudios.com",art:"laden",k:"unbekannt",pr:"ja",t:"Heimische schottische Laubhölzer und Drechselrohlinge; Holzladen unter der Woche öffentlich.",te:"Local Scottish hardwoods and turning blanks; wood shop open to the public on weekdays.",lat:55.51,lon:-2.58,q:"https://realwoodstudios.com/",si:"hoch"},
+ {L:"GB",n:"G&S Specialist Timber",c:"wood",s:"Drechsel- und Schnitzholz",a:"The Workshop, Snuff Mill Lane, Stainton",p:"CA11 0ES",o:"Penrith",w:"https://www.toolsandtimber.co.uk",art:"beides",k:"unbekannt",pr:"ja",t:"Drechselrohlinge, Bretter und Leisten sowie Schnitz-, Drechsel- und Handwerkzeug.",te:"Turning blanks, boards and mouldings plus carving, turning and hand tools.",lat:54.65,lon:-2.79,q:"https://www.toolsandtimber.co.uk/about-us",si:"hoch"},
+ {L:"GB",n:"W L West & Sons",c:"wood",s:"Sägewerk und Schnittholz",a:"Selham",p:"GU28 0PJ",o:"Petworth",w:"https://www.wlwest.co.uk",art:"laden",k:"unbekannt",pr:"ja",t:"Sägewerk mit Laden für Hausbesitzer und Holzwerker: Eiche, Nuss, Esche, Ulme u. a.",te:"Sawmill with retail shop for homeowners and woodworkers: oak, walnut, ash, elm and more.",lat:50.98,lon:-0.67,q:"https://www.wlwest.co.uk/",si:"hoch"},
+ {L:"GB",n:"Duffield Timber",c:"wood",s:"Holzfachhandel",a:"Green Lane, Melmerby",p:"HG4 5JB",o:"Ripon",w:"https://www.duffieldtimber.com",art:"laden",k:"nein",pr:"ja",t:"Europäische, amerikanische und afrikanische Laubhölzer sowie Accoya; Laden auch für Hobbyholzwerker.",te:"European, American and African hardwoods plus Accoya; shop also serving hobby woodworkers.",lat:54.18,lon:-1.48,q:"https://www.duffieldtimber.com/",si:"hoch"},
+ {L:"GB",n:"Sutton Timber",c:"wood",s:"Sägewerk und Schnittholz",a:"Unit D, White House Farm, Main Road, Darsham",p:"IP17 3PP",o:"Saxmundham",w:"https://www.suttontimber.co.uk",art:"laden",k:"nein",pr:"ja",t:"Englische Laubhölzer (Eiche, Esche, Ulme, Kirsche, Bergahorn) für Gewerbe und Privatkunden.",te:"English hardwoods (oak, ash, elm, cherry, sycamore) for trade and individual clients.",lat:52.27,lon:1.53,q:"https://www.suttontimber.co.uk/",si:"mittel"},
+ {L:"GB",n:"Vastern Timber",c:"wood",s:"Sägewerk und Schnittholz",a:"Studley Sawmills, Studley",p:"SN11 9NH",o:"Calne",w:"https://www.vastern.co.uk",art:"laden",k:"nein",pr:"unklar",t:"Britische Laubhölzer als Schnittholz und Baumkantenbohlen; Auswahl nur nach Termin.",te:"British hardwoods as sawn and waney-edge boards; selection by appointment only.",lat:51.44,lon:-2.04,q:"https://www.vastern.co.uk/contact-us/",si:"mittel"}
+];
+
+// HolzWerken-Holzhändlerliste, Stand Dezember 2025 (Leserempfehlungen, Kopie), über PLZ verortet; f = Schnittholz, Bauholz, Platten, Drechselholz
+const HW=[];
+
+// Sprache: Deutsch ist die Quelle, EN übersetzt Wort für Wort; Wahl wird im Browser gemerkt
+const EN={
+"Hinweis auf GitHub": "Report on GitHub",
+"Fehlt ein Händler oder stimmt etwas nicht?": "Is a dealer missing or something wrong?",
+"Die Leserliste der Zeitschrift HolzWerken mit mehreren hundert weiteren Holzhändlern ist auf dieser Karte nicht enthalten. Es gibt sie kostenlos als PDF unter holzwerken.net/finder.": "The reader list of the German magazine HolzWerken, with several hundred more timber dealers, is not included on this map. It is available free as a PDF at holzwerken.net/finder.",
+"Vereinigtes Königreich: Axminster Tools ist seit Oktober 2025 in Administration, aufgenommen ist nur der Laden in Axminster. The Toolpost und Peter Child haben geschlossen; Craft Supplies, Ashley Iles und Robert Sorby verkaufen nur über Händler. In Schottland und Nordirland fand die Recherche kaum Werkzeughändler.": "United Kingdom: Axminster Tools has been in administration since October 2025; only the Axminster store is listed. The Toolpost and Peter Child have closed; Craft Supplies, Ashley Iles and Robert Sorby sell only through dealers. In Scotland and Northern Ireland the research found hardly any tool dealers.",
+"Werkzeug- und Holzhändler Deutschland": "Woodworking Tool and Timber Dealers",
+"Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug im Stil von DICTUM und Dieter Schmid sowie Holzhändler, die auch an Privatleute verkaufen, in Deutschland, den Nachbarländern und dem Vereinigten Königreich. Die recherchierten Einträge sind an der Händlerseite geprüft. Weitere Holzhändler, von Lesern empfohlen, listet die Zeitschrift HolzWerken unter holzwerken.net/finder.": "Specialist dealers for fine hand tools, woodturning supplies and spoon carving tools in the spirit of DICTUM and Dieter Schmid, plus timber merchants who also sell to private customers, in Germany, its neighbouring countries and the United Kingdom. The researched entries have been checked against the dealer's own website. More timber dealers, recommended by readers, are listed by the German magazine HolzWerken at holzwerken.net/finder.",
+"Stand 02.11.2026": "As of 2 Nov 2026",
+"Einträge": "entries",
+"Sprache": "Language",
+"Salbei": "Sage",
+"Ahorn": "Maple",
+"Papier & Terrakotta": "Paper & Terracotta",
+"Morgenhimmel": "Morning Sky",
+"Dunkle Darstellung": "Dark mode",
+"Land wählen": "Choose country",
+"Karte von Deutschland, den Nachbarländern und Großbritannien mit Händlerstandorten": "Map of Germany, its neighbours and Great Britain with dealer locations",
+"Infos zum Standort": "Location details",
+"Hineinzoomen": "Zoom in",
+"Herauszoomen": "Zoom out",
+"Ganze Karte zeigen": "Show whole map",
+"Ganze Karte": "Whole map",
+"Mausrad oder zwei Finger zoomen, ziehen verschiebt, Doppelklick zoomt hinein.": "Zoom with the mouse wheel or two fingers, drag to pan, double-click to zoom in.",
+"Händlerliste": "Dealer list",
+"Punkt ergänzen": "Add a point",
+"Punkt bearbeiten": "Edit point",
+"Klicke in die Karte, um den Standort zu setzen. Zum Feinjustieren einfach noch einmal klicken; vorher am besten nah heranzoomen.": "Click the map to set the location. Click again to fine-tune; it helps to zoom in closely first.",
+"Name": "Name",
+"Kategorie": "Category",
+"Schwerpunkt": "Focus",
+"Straße": "Street",
+"PLZ": "Postcode",
+"Ort": "Town",
+"Land": "Country",
+"Website": "Website",
+"Art": "Type",
+"Kurse": "Courses",
+"Privatverkauf": "Sells to private customers",
+"Beschreibung": "Description",
+"Standort": "Location",
+"Werkzeug, Drechselbedarf": "Tools",
+"Holz": "Timber",
+"Laden oder Lager": "Shop or yard",
+"Nur Versand": "Mail order only",
+"Laden und Versand": "Shop and mail order",
+"Kursort": "Course venue",
+"unbekannt": "unknown",
+"ja": "yes",
+"nein": "no",
+"unklar": "unclear",
+"Noch nicht gesetzt: in die Karte klicken": "Not set yet: click the map",
+"Speichern": "Save",
+"Abbrechen": "Cancel",
+"Alle": "All",
+"Werkzeug": "Tools",
+"Eigenschaften": "Features",
+"Laden oder Lager vor Ort": "Shop or yard on site",
+"Versand": "Mail order",
+"Nur ergänzte": "Added only",
+"HolzWerken-Liste zeigen": "Show HolzWerken list",
+"Name, Ort, PLZ oder Holzart suchen": "Search name, town, postcode or wood",
+"Suchen": "Search",
+"Richtigstellungen": "Corrections",
+"HolzWerken-Liste": "HolzWerken list",
+"Lücken": "Gaps",
+"Bewusst weggelassen": "Deliberately left out",
+"„Feine Werkzeuge“ (feinewerkzeuge.de, fine-tools.com) gehört der Dieter Schmid Werkzeuge GmbH in Berlin und verkauft seit 2020 nur noch online. Einen Händler Thomas Schmitz in Hückeswagen konnte die Recherche nicht finden.": "“Feine Werkzeuge” (feinewerkzeuge.de, fine-tools.com) belongs to Dieter Schmid Werkzeuge GmbH in Berlin and has sold online only since 2020. The research could not find a dealer called Thomas Schmitz in Hückeswagen.",
+"DICTUM sitzt seit 2018 in Plattling, nicht mehr in Metten. Dazu kommen der Laden mit Kurswerkstatt in München und die Kurswerkstatt Niederalteich.": "DICTUM has been based in Plattling since 2018, no longer in Metten. There is also the shop with a course workshop in Munich and the course workshop in Niederalteich.",
+"Die hohlen Punkte sind eine Kopie der Holzhändlerliste von HolzWerken (Vincentz Network), Stand Dezember 2025. Es sind Empfehlungen von Lesern für den privaten Holzkauf, hier nicht einzeln geprüft; einzelne Händler können inzwischen geschlossen sein. Vorher anrufen.": "The hollow points are a copy of the timber dealer list of HolzWerken (Vincentz Network), as of December 2025. They are reader recommendations for buying timber as a private customer, not checked individually here; some dealers may have closed since. Call ahead.", 
+"Verortet über die Postleitzahl, also auf Ortsebene. Händler, die schon geprüft auf der Karte stehen, sind nur einmal eingetragen.": "Placed by postcode, i.e. at town level. Dealers that are already on the map as checked entries appear only once.",
+"Maßgeblich ist das Original, kostenlos als PDF unter holzwerken.net/finder. Ob es eine neuere Fassung gibt, wird monatlich geprüft, zuletzt geprüft am 03.11.2026.": "The original, available free as a PDF at holzwerken.net/finder, is authoritative. It is checked monthly for a newer version, last checked on 2026-11-03.",
+"In Mecklenburg-Vorpommern, Brandenburg, Sachsen-Anhalt und Thüringen fand die Recherche keinen Holzhändler mit belegtem Privatverkauf.": "In Mecklenburg-Western Pomerania, Brandenburg, Saxony-Anhalt and Thuringia the research found no timber dealer with documented sales to private customers.",
+"Händlerlisten von Kirschen, Pfeil, Tormek und Sorby sind nicht öffentlich; Handwerkzeug-Fachhandel jenseits der großen Versender ist dünn.": "Dealer lists from Kirschen, Pfeil, Tormek and Sorby are not public; specialist hand-tool retail beyond the big mail-order firms is thin.",
+"Löffelschnitzen: Kleine Schmieden mit eigenem Shop für Hakenmesser fand die Recherche in Deutschland und Österreich nicht; die meisten Händler führen Mora, BeaverCraft und Narex. Ausgesprochene Spooncarving-Spezialisten sind Carolina's Slöjd, Hout van Bomen, Wolfknives und Bois et Toile.": "Spoon carving: the research found no small smithies with their own hook-knife shop in Germany or Austria; most dealers stock Mora, BeaverCraft and Narex. Dedicated spoon carving specialists are Carolina's Slöjd, Hout van Bomen, Wolfknives and Bois et Toile.",
+"Für Luxemburg fand die Recherche keinen passenden Händler, im Elsass und in Lothringen keinen Werkzeughändler.": "For Luxembourg the research found no suitable dealer, and no tool dealer in Alsace or Lorraine.",
+"Kurse sind bei den meisten Holzhändlern nicht geprüft. Die Ländergrenzen sind vereinfacht gezeichnet.": "Courses have not been checked for most timber dealers. Coastlines and borders are drawn in simplified form.",
+"Nebelheim Tonholz (stellt Holzverkauf Ende 2026 ein), Drechselholz Laschinger (Geschäftsaufgabe Februar 2027).": "Nebelheim Tonholz (ending timber sales at the end of 2026), Drechselholz Laschinger (closing down in February 2027).",
+"Händler ohne erreichbare Website oder mit veraltetem Stand, z. B. Holz Osenstätter, Holz Widmann, BZN Meyer & Sohn, Paul Hartmann.": "Dealers without a reachable website or with outdated information, e.g. Holz Osenstätter, Holz Widmann, BZN Meyer & Sohn, Paul Hartmann.",
+"Reine Maschinen-, B2B- oder Plattenhändler; Pfeil (Hersteller in Langenthal, kein Laden belegt).": "Dealers selling only machinery, only to trade, or only sheet material; Pfeil (manufacturer in Langenthal, no shop documented).",
+"Außerhalb der Karte, aber gute Versender: Auriou in Saint-Juéry (Raspeln, Lie-Nielsen, auriou.fr) und La Maison du Tournage in Bédarieux (Drechselbedarf, maisondutournage.com); für Löffelschnitzen Pyrene Bushcraft bei Toulouse (Mora, BeaverCraft, pyrene-bushcraft.com).": "Outside the map but good mail-order dealers: Auriou in Saint-Juéry (rasps, Lie-Nielsen, auriou.fr) and La Maison du Tournage in Bédarieux (woodturning supplies, maisondutournage.com); for spoon carving, Pyrene Bushcraft near Toulouse (Mora, BeaverCraft, pyrene-bushcraft.com).",
+"Handwerkzeug": "Hand tools",
+"Drechselbedarf": "Woodturning supplies",
+"Löffelschnitzen": "Spoon carving",
+"Edelholz": "Fine hardwoods",
+"Tonholz": "Tonewood",
+"Drechsel- und Schnitzholz": "Turning and carving wood",
+"Holzfachhandel": "Timber merchant",
+"Sägewerk und Schnittholz": "Sawmill and sawn timber",
+"Privatverkäufer": "Private seller",
+"Art unbekannt": "Type unknown",
+"Privatverkauf unklar": "Private sales unclear",
+"teils belegt": "partly verified",
+"Dein Eintrag": "Your entry",
+"Ergänzt von ": "Added by ",
+"jemandem": "someone",
+"Kopie aus HolzWerken-Liste 12/2025": "Copy from HolzWerken list 12/2025",
+"Beleg": "Source",
+"Bearbeiten": "Edit",
+"Entfernen": "Remove",
+"Schließen": "Close",
+"Wirklich entfernen?": "Really remove?",
+"Behalten": "Keep",
+"Kein Eintrag passt zu diesen Filtern. Einen Filter abwählen oder die Suche leeren.": "No entry matches these filters. Deselect a filter or clear the search.",
+"Edel-, Ton-, Drechsel- und Schnitzholz": "Fine, tone, turning and carving wood",
+"Holzhandel, Sägewerk, Privat": "Timber merchant, sawmill, private",
+"HolzWerken-Liste (Kopie, 12/2025)": "HolzWerken list (copy, 12/2025)", "Original bei HolzWerken": "Original at HolzWerken",
+"Ergänzter Punkt": "Added point",
+"Online-Händler stehen am Firmensitz": "Online dealers are shown at their registered address",
+"Alle Länder": "All countries",
+"Deutschland": "Germany",
+"Österreich": "Austria",
+"Schweiz": "Switzerland",
+"Niederlande": "Netherlands",
+"Belgien": "Belgium",
+"Luxemburg": "Luxembourg",
+"Frankreich": "France",
+"Dänemark": "Denmark",
+"Polen": "Poland",
+"Tschechien": "Czechia",
+"Vereinigtes Königreich": "United Kingdom",
+"Großbritannien": "Great Britain",
+"Irland": "Ireland",
+"Norwegen": "Norway",
+"Schweden": "Sweden",
+"Italien": "Italy",
+"Slowakei": "Slovakia",
+"Ungarn": "Hungary",
+"Köln": "Cologne",
+"Nürnberg": "Nuremberg",
+"München": "Munich",
+"Hannover": "Hanover",
+"Wien": "Vienna",
+"Zürich": "Zurich",
+"Genf": "Geneva",
+"Brüssel": "Brussels",
+"Straßburg": "Strasbourg",
+"Prag": "Prague",
+"Brünn": "Brno",
+"Kopenhagen": "Copenhagen",
+"Breslau": "Wrocław",
+"Posen": "Poznań",
+"Stettin": "Szczecin",
+"Danzig": "Gdańsk",
+"Bitte einen Namen eintragen.": "Please enter a name.",
+"Bitte den Standort setzen: in die Karte klicken.": "Please set the location: click the map.",
+"Die Website-Adresse ist ungültig. Beispiel: https://beispiel.de": "The website address is invalid. Example: https://example.com",
+"Speichern ist in dieser Ansicht nicht möglich. Öffne die Seite auf claude.ai und melde dich an.": "Saving isn't possible in this view. Open the page on claude.ai and sign in.",
+"Dein Konto gibt dieser Seite keine Kennung; Speichern geht deshalb nicht.": "Your account doesn't give this page an ID, so saving isn't possible.",
+"Der Speicher ist voll. Entferne eigene Punkte, die du nicht mehr brauchst.": "Storage is full. Remove points of your own that you no longer need.",
+"Du hast hier keine Schreibrechte. Punkte ergänzen kann nur, wen die Besitzerin oder der Besitzer der Karte zum Bearbeiten eingeladen hat.": "You don't have write access here. Only people the map's owner has invited to edit can add points.",
+"Speichern hat nicht geklappt. Bitte gleich noch einmal versuchen.": "Saving didn't work. Please try again in a moment.",
+"Entfernen hat nicht geklappt. Bitte noch einmal versuchen.": "Removing didn't work. Please try again.",
+"Ergänzte Punkte werden geladen …": "Loading added points …",
+"Eigene Punkte lassen sich nur in der claude.ai-Ansicht speichern.": "Your own points can only be saved in the claude.ai view.",
+"Ergänzte Punkte sind gerade nicht erreichbar; die Liste kann unvollständig sein.": "Added points can't be reached right now; the list may be incomplete.",
+"Noch keine ergänzten Punkte. Mit „Punkt ergänzen“ legst du den ersten an.": "No added points yet. Use “Add a point” to create the first one.",
+"Noch keine ergänzten Punkte.": "No added points yet.",
+"Ergänzte Punkte konnten nicht geladen werden.": "Added points couldn't be loaded.",
+"Schnittholz": "sawn timber",
+"Bauholz (KVH)": "construction timber (KVH)",
+"Plattenmaterial": "sheet material",
+"Drechselholz": "turning blanks",
+"Privatverkäufer; Kontakt steht in der HolzWerken-Liste.": "Private seller; contact details are in the HolzWerken list.",
+"Laut HolzWerken-Liste: ": "According to the HolzWerken list: "
+};
+let lang=(()=>{try{const l=localStorage.getItem("karte-lang");if(l==="de"||l==="en")return l}catch(e){}return /^de\b/i.test(navigator.language||"de")?"de":"en"})();
+const tr=s=>lang==="en"&&EN[s]!=null?EN[s]:s;
+const txt=d=>lang==="en"&&d.te?d.te:d.t;
+const SUBS={tool:["Handwerkzeug","Drechselbedarf","Löffelschnitzen"],wood:["Edelholz","Tonholz","Drechsel- und Schnitzholz","Holzfachhandel","Sägewerk und Schnittholz","Privatverkäufer"]};
+const ART={laden:"Laden oder Lager",online:"Nur Versand",beides:"Laden und Versand",kurs:"Kursort"};
+const OFFER=["Schnittholz","Bauholz (KVH)","Plattenmaterial","Drechselholz"];
+const HWQ="https://www.holzwerken.net/finder/";
+const HWX=HW.map(e=>{const of=OFFER.filter((_,i)=>e.f[i]==="1");return{...e,c:"wood",s:e.pv?"Privatverkäufer":"Holzfachhandel",art:"laden",k:"unbekannt",hw:1,of,q:HWQ,
+  t:e.pv?"Privatverkäufer; Kontakt steht in der HolzWerken-Liste.":(of.length?"Laut HolzWerken-Liste: "+of.join(", ")+".":""),
+  te:e.pv?EN["Privatverkäufer; Kontakt steht in der HolzWerken-Liste."]:(of.length?EN["Laut HolzWerken-Liste: "]+of.map(o=>EN[o]).join(", ")+".":"")}});
+const REF=[...D.map(d=>({L:"DE",...d})),...N,...HWX].map((d,i)=>({...d,id:"r"+i}));
+let OWN=[];
+const st={cat:"all",sub:null,land:"",flags:new Set(),q:"",sel:null,view:0,hw:true};
+const NS="http://www.w3.org/2000/svg";
+const $=id=>document.getElementById(id);
+
+// Design-Menü: vier Farbwelten und Dunkle Darstellung, gemerkt im Browser
+const root=document.documentElement,darkMq=matchMedia("(prefers-color-scheme: dark)");
+const isDark=()=>root.dataset.theme?root.dataset.theme==="dark":darkMq.matches;
+function applyDesign(){
+  const d=root.dataset.design||"c";
+  document.querySelectorAll("[data-dsg]").forEach(b=>b.setAttribute("aria-checked",b.dataset.dsg===d));
+  $("themeBtn").setAttribute("aria-checked",isDark());
+  const sw=document.querySelector(`[data-dsg="${d}"] .sw`);$("dsgSw").style.cssText=sw.style.cssText;
+}
+function dsgMenu(open,back){$("dsgMenu").hidden=!open;$("dsgBtn").setAttribute("aria-expanded",open);
+  if(open)$("dsgMenu").querySelector('[aria-checked="true"]').focus();else if(back)$("dsgBtn").focus()}
+$("dsgBtn").addEventListener("click",()=>dsgMenu($("dsgMenu").hidden));
+$("dsgMenu").addEventListener("click",e=>{
+  const b=e.target.closest("[data-dsg]");
+  if(b){root.dataset.design=b.dataset.dsg;try{localStorage.setItem("karte-design",b.dataset.dsg)}catch(err){}}
+  if(e.target.closest("#themeBtn")){const t=isDark()?"light":"dark";root.dataset.theme=t;try{localStorage.setItem("karte-theme",t)}catch(err){}}
+  applyDesign();
+});
+$("dsgMenu").addEventListener("keydown",e=>{
+  const it=[...$("dsgMenu").querySelectorAll("button")],i=it.indexOf(document.activeElement);
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();it[(i+(e.key==="ArrowDown"?1:it.length-1))%it.length].focus()}
+  if(e.key==="Escape"){e.stopPropagation();dsgMenu(false,true)}
+});
+document.addEventListener("click",e=>{if(!$("dsgMenu").hidden&&!e.target.closest("#dsgMenu,#dsgBtn"))dsgMenu(false)});
+darkMq.addEventListener("change",applyDesign);
+applyDesign();
+const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent&&parent.appendChild(e);return e};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>/^https?:\/\/[^\s"'<>]+$/i.test(u||"")?u:"";
+const host=u=>u.replace(/^https?:\/\/(www\.)?/,"").replace(/\/.*$/,"");
+const all=()=>[...REF,...OWN];
+const byId=id=>all().find(d=>d.id===id);
+const path=pts=>"M"+pts.map(p=>P(...p).map(v=>v.toFixed(1)).join(",")).join("L");
+
+// Karte zeichnen
+const svg=$("map");
+const [ex0,ey0]=P(EXT[0],EXT[3]),[ex1,ey1]=P(EXT[2],EXT[1]);
+el("rect",{class:"sea",x:ex0,y:ey0,width:ex1-ex0,height:ey1-ey0},svg);
+el("path",{class:"land",d:path(MAIN)+"Z"},svg);
+ISLANDS.forEach(i=>el("path",{class:"land",d:path(i)+"Z"},svg));
+LAKES.forEach(l=>el("path",{class:"water",d:path(l)+"Z"},svg));
+el("path",{class:"home",d:path(BORDER)+"Z"},svg);
+el("path",{class:"water",d:path(LAKES[0])+"Z"},svg);
+BORDERS.forEach(b=>el("path",{class:"border",d:path(b)},svg));
+const gLabels=el("g",{"aria-hidden":"true"},svg);
+const gHw=el("g",{},svg);
+const gm=el("g",{},svg);
+const gPin=el("g",{class:"pin","aria-hidden":"true"},svg);
+const tip=el("text",{class:"tip"},svg);
+let S=1;
+
+function drawLabels(){
+  gLabels.innerHTML="";
+  COUNTRIES.forEach(([n,lon,lat])=>{const[x,y]=P(lon,lat);const t=el("text",{class:"country",x,y,"text-anchor":"middle","font-size":11*S},gLabels);t.textContent=tr(n)});
+  const gc=el("g",{class:"city"},gLabels);
+  CITIES.forEach(([n,lon,lat])=>{const[x,y]=P(lon,lat);el("circle",{cx:x,cy:y,r:2*S},gc);const t=el("text",{x:x+5*S,y:y+4*S,"font-size":11*S},gc);t.textContent=tr(n)});
+}
+// Zoom und Verschieben: der Ausschnitt (vb) behält immer das Seitenverhältnis der ganzen Karte
+const FX=ex0,FY=ey0,FW=ex1-ex0,FH=ey1-ey0,ASP=(FRAME[2]-FRAME[0])*CX/(FRAME[3]-FRAME[1]),MINW=40,MAXW=Math.max(FW,FH*ASP);
+const vb={x:FX,y:FY,w:MAXW,h:MAXW/ASP};
+let raf=0,lastW=0;
+function applyVB(){
+  vb.w=Math.min(MAXW,Math.max(MINW,vb.w));vb.h=vb.w/ASP;
+  vb.x=vb.w>=FW?FX+(FW-vb.w)/2:Math.min(FX+FW-vb.w,Math.max(FX,vb.x));
+  vb.y=vb.h>=FH?FY+(FH-vb.h)/2:Math.min(FY+FH-vb.h,Math.max(FY,vb.y));
+  svg.setAttribute("viewBox",`${vb.x.toFixed(2)} ${vb.y.toFixed(2)} ${vb.w.toFixed(2)} ${vb.h.toFixed(2)}`);
+  if(typeof placePop==="function")placePop();
+  if(vb.w!==lastW&&!raf)raf=requestAnimationFrame(()=>{raf=0;lastW=vb.w;S=vb.w/620;
+    tip.setAttribute("font-size",12*S);tip.setAttribute("stroke-width",4*S);drawLabels();drawMarks();drawPin()});
+}
+function fitBox([a,b,c,d]){
+  const[x0,y0]=P(a,d),[x1,y1]=P(c,b);let w=x1-x0,h=y1-y0;
+  if(w/h<ASP)w=h*ASP;else h=w/ASP;
+  vb.w=w*1.04;vb.x=(x0+x1)/2-vb.w/2;vb.y=(y0+y1)/2-vb.w/ASP/2;applyVB();
+}
+function zoomAt(f,px,py){
+  if(px===undefined){px=vb.x+vb.w/2;py=vb.y+vb.h/2}
+  const nw=Math.min(MAXW,Math.max(MINW,vb.w*f)),k=nw/vb.w;
+  vb.x=px-(px-vb.x)*k;vb.y=py-(py-vb.y)*k;vb.w=nw;applyVB();
+}
+function toSvg(cx,cy){const pt=svg.createSVGPoint();pt.x=cx;pt.y=cy;const m=svg.getScreenCTM();return m?pt.matrixTransform(m.inverse()):null}
+svg.addEventListener("wheel",e=>{e.preventDefault();const p=toSvg(e.clientX,e.clientY);if(p)zoomAt(Math.exp(e.deltaY*(e.deltaMode?0.05:0.0015)),p.x,p.y)},{passive:false});
+svg.addEventListener("dblclick",e=>{e.preventDefault();const p=toSvg(e.clientX,e.clientY);if(p)zoomAt(0.5,p.x,p.y)});
+$("zIn").onclick=()=>zoomAt(0.6);$("zOut").onclick=()=>zoomAt(1/0.6);$("zAll").onclick=()=>fitBox(EXT);
+// Ziehen mit Maus oder einem Finger, Zwei-Finger-Zoom; nach dem Ziehen kein Klick
+const ptrs=new Map();let drag=null,suppress=false;
+svg.addEventListener("pointerdown",e=>{
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  const scale=vb.w/svg.getBoundingClientRect().width;
+  if(ptrs.size===1)drag={sx:e.clientX,sy:e.clientY,vx:vb.x,vy:vb.y,scale,moved:false};
+  else if(ptrs.size===2){const[a,b]=[...ptrs.values()];drag={pinch:Math.hypot(a.x-b.x,a.y-b.y),w:vb.w,moved:true}}
+});
+window.addEventListener("pointermove",e=>{
+  if(!ptrs.has(e.pointerId)||!drag)return;
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(drag.pinch&&ptrs.size===2){
+    const[a,b]=[...ptrs.values()],d=Math.hypot(a.x-b.x,a.y-b.y);const p=toSvg((a.x+b.x)/2,(a.y+b.y)/2);
+    if(p&&d>0)zoomAt(drag.w*(drag.pinch/d)/vb.w,p.x,p.y);
+  }else if(!drag.pinch){
+    const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+    if(!drag.moved&&Math.hypot(dx,dy)>5){drag.moved=true;svg.classList.add("dragging")}
+    if(drag.moved){vb.x=drag.vx-dx*drag.scale;vb.y=drag.vy-dy*drag.scale;applyVB()}
+  }
+});
+function endPtr(e){
+  if(!ptrs.has(e.pointerId))return;ptrs.delete(e.pointerId);
+  if(drag&&drag.moved){suppress=true;setTimeout(()=>suppress=false,60)}
+  if(!ptrs.size){drag=null;svg.classList.remove("dragging")}
+  else if(ptrs.size===1){const[p]=[...ptrs.values()];drag={sx:p.x,sy:p.y,vx:vb.x,vy:vb.y,scale:vb.w/svg.getBoundingClientRect().width,moved:true}}
+}
+window.addEventListener("pointerup",endPtr);window.addEventListener("pointercancel",endPtr);
+
+// Länderknöpfe: filtern und auf das Land zoomen
+function countryChips(){
+  const row=$("views");row.innerHTML="";
+  const n=L=>all().filter(d=>(!L||d.L===L)&&(st.hw||!d.hw)).length;
+  [["","Alle Länder"],...Object.entries(LANDS)].forEach(([k,v])=>{v=tr(v);
+    const b=document.createElement("button");b.className="chip";b.id="land-"+(k||"alle");b.type="button";
+    b.innerHTML=`${v}<span class="n">${n(k)}</span>`;b.setAttribute("aria-pressed",st.land===k);
+    b.onclick=()=>{st.land=st.land===k?"":k;fitBox(BOX[st.land]);render()};row.appendChild(b);
+  });
+}
+
+function matches(d){
+  if(st.cat!=="all"&&d.c!==st.cat)return false;
+  if(st.sub&&d.s!==st.sub&&!(st.sub==="Löffelschnitzen"&&d.sp))return false;
+  if(st.land&&d.L!==st.land)return false;
+  if(st.flags.has("laden")&&!(d.art==="laden"||d.art==="beides"))return false;
+  if(st.flags.has("versand")&&!(d.art==="online"||d.art==="beides"))return false;
+  if(st.flags.has("kurse")&&d.k!=="ja")return false;
+  if(st.flags.has("own")&&!d.own)return false;
+  if(d.hw&&!st.hw)return false;
+  if(st.q){const h=[d.n,d.o,d.p,d.t,d.te,d.s,tr(d.s),LANDS[d.L],tr(LANDS[d.L])].join(" ").toLowerCase();if(!h.includes(st.q))return false}
+  return true;
+}
+// Symbol je Typ: Werkzeug blau (Raute Handwerkzeug, Quadrat Drechselbedarf, Dreieck Löffelschnitzen),
+// Holz rostrot (Sechseck Edel-, Ton-, Drechsel- und Schnitzholz, Kreis Holzhandel, Sägewerk, Privat)
+const SHP={raute:"M0,-7.6L7.6,0L0,7.6L-7.6,0Z",quadrat:"M-5.4,-5.4H5.4V5.4H-5.4Z",dreieck:"M0,-7.4L6.9,5.2H-6.9Z",
+  sechseck:"M0,-6.6L5.7,-3.3L5.7,3.3L0,6.6L-5.7,3.3L-5.7,-3.3Z"};
+const SPEZIAL=["Edelholz","Tonholz","Drechsel- und Schnitzholz"];
+function shapeOf(d){
+  if(d.c==="tool")return d.s==="Drechselbedarf"?"quadrat":d.s==="Löffelschnitzen"?"dreieck":"raute";
+  return SPEZIAL.includes(d.s)?"sechseck":"kreis";
+}
+function icon(kind,fill,extra=""){
+  const f=fill==="hw"?'fill="var(--surface)" stroke="var(--wood)" stroke-width="2"':fill==="own"?'fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="2.2 1.8"':`fill="var(--${fill})"`;
+  const sh=kind==="kreis"?`<circle r="${fill==="hw"||fill==="own"?5:6}" ${f}/>`:`<path d="${SHP[kind]}" ${f}/>`;
+  return `<svg width="14" height="14" viewBox="-8 -8 16 16" aria-hidden="true"${extra}>${sh}</svg>`;
+}
+function legend(){$("legend").innerHTML=`<div class="lg-row"><span class="lg-h">${tr("Werkzeug")}</span><span>${icon("raute","tool")}${tr("Handwerkzeug")}</span><span>${icon("quadrat","tool")}${tr("Drechselbedarf")}</span><span>${icon("dreieck","tool")}${tr("Löffelschnitzen")}</span></div>
+  <div class="lg-row"><span class="lg-h">${tr("Holz")}</span><span>${icon("sechseck","wood")}${tr("Edel-, Ton-, Drechsel- und Schnitzholz")}</span><span>${icon("kreis","wood")}${tr("Holzhandel, Sägewerk, Privat")}</span></div>
+  <div class="lg-row"><span>${tr("Online-Händler stehen am Firmensitz")}</span></div>`}
+legend();
+function drawMarks(){
+  gm.innerHTML="";gHw.innerHTML="";
+  all().filter(matches).forEach(d=>{
+    const[x,y]=P(d.lon,d.lat);
+    const g=el("g",{class:"m "+d.c+(d.own?" own":"")+(d.hw?" hw":"")+(d.id===st.sel?" sel":""),tabindex:"0",role:"button","aria-label":d.n+", "+d.o,
+      transform:`translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${S.toFixed(3)})`},d.hw?gHw:gm);
+    const k=shapeOf(d);
+    if(k==="kreis")el("circle",{class:"shape",r:d.hw?4.2:6},g);else el("path",{class:"shape",d:SHP[k]},g);
+    if(d.own)el("circle",{class:"ring",r:10},g);
+    el("title",{},g).textContent=d.n+" – "+d.o;
+    g.addEventListener("click",e=>{e.stopPropagation();if(!suppress)select(d.id,true)});
+    g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(d.id,true)}});
+  });
+  const s=st.sel&&byId(st.sel);
+  if(s&&matches(s)){const m=[...gm.children,...gHw.children].find(g=>g.getAttribute("aria-label")===s.n+", "+s.o);if(m)gm.appendChild(m)}
+  tip.textContent="";
+  placePop();
+}
+
+// Infofenster am gewählten Punkt
+var pop=$("pop");
+function placePop(){
+  const d=st.sel&&byId(st.sel);
+  if(!pop)return;
+  if(!d||!matches(d)){pop.hidden=true;pop.dataset.id="";return}
+  if(pop.dataset.id!==d.id){pop.innerHTML=`<button class="x" type="button" aria-label="${tr("Schließen")}" data-act="close">×</button>${infoHtml(d,false)}
+    ${d.own&&canWrite&&(d.uid===myId||amOwner)?`<div class="links"><button class="btn ghost small" type="button" data-act="edit">${tr("Bearbeiten")}</button></div>`:""}`;pop.dataset.id=d.id}
+  const frame=pop.parentElement.getBoundingClientRect(),m=svg.getScreenCTM();if(!m)return;
+  const pt=svg.createSVGPoint();[pt.x,pt.y]=P(d.lon,d.lat);const sp=pt.matrixTransform(m);
+  const x=sp.x-frame.left,y=sp.y-frame.top;
+  pop.hidden=false;
+  const narrow=frame.width<520;pop.classList.toggle("dock",narrow);
+  if(narrow){pop.style.left="";pop.style.top="";return}
+  if(x<0||y<0||x>frame.width||y>frame.height){pop.hidden=true;return}
+  const w=pop.offsetWidth,h=pop.offsetHeight,gap=14;
+  let left=Math.min(frame.width-w-10,Math.max(10,x-w/2));
+  let top=y-h-gap;if(top<10)top=Math.min(frame.height-h-10,y+gap);
+  pop.style.left=left+"px";pop.style.top=Math.max(10,top)+"px";
+}
+pop.addEventListener("click",e=>{
+  const act=e.target.closest("[data-act]")?.dataset.act;
+  if(act==="close")select(null);
+  if(act==="edit"){const d=byId(st.sel);if(d)openForm(d)}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!pop.hidden)select(null)});
+window.addEventListener("resize",()=>placePop());
+
+// Liste
+function infoHtml(d,edit){
+  const tags=[`<span class="tag y">${tr(ART[d.art]||"Art unbekannt")}</span>`];
+  if(d.k==="ja")tags.push(`<span class="tag y">${tr("Kurse")}</span>`);
+  if(d.sp)tags.push(`<span class="tag y">${tr("Löffelschnitzen")}</span>`);
+  if(d.c==="wood"&&d.pr==="unklar")tags.push(`<span class="tag warn">${tr("Privatverkauf unklar")}</span>`);
+  if(d.si==="mittel")tags.push(`<span class="tag warn">${tr("teils belegt")}</span>`);
+  if(d.own)tags.push(`<span class="tag own">${d.uid===myId?tr("Dein Eintrag"):tr("Ergänzt von ")+esc(NAMES[d.uid]||tr("jemandem"))}</span>`);
+  if(d.hw)tags.push(`<span class="tag warn">${tr("Kopie aus HolzWerken-Liste 12/2025")}</span>`);
+  const w=safeUrl(d.w),q=safeUrl(d.q);
+  const addr=[d.a&&esc(d.a),(d.p||d.o)&&`<span class="plz">${esc(d.p)}</span> ${esc(d.o)}`,d.L!=="DE"&&esc(tr(LANDS[d.L]||d.L)),esc(tr(d.s))].filter(Boolean).join(" · ");
+  return `<h3>${esc(d.n)}</h3>
+    <div class="addr">${addr}</div>
+    ${d.t?`<p class="what">${esc(txt(d))}</p>`:""}
+    <div class="tags">${tags.join("")}</div>
+    <div class="links">${w?`<a href="${esc(w)}" target="_blank" rel="noopener">${esc(host(w))}</a>`:""}${q&&host(q)!==host(w)?`<a href="${esc(q)}" target="_blank" rel="noopener">${tr(d.hw?"Original bei HolzWerken":"Beleg")}</a>`:""}${d.tel?`<span>Tel. ${esc(d.tel)}</span>`:""}
+    ${edit&&d.own&&canWrite&&(d.uid===myId||amOwner)?`<button class="btn ghost small" type="button" data-act="edit">${tr("Bearbeiten")}</button><button class="btn ghost small" type="button" data-act="del">${tr("Entfernen")}</button>`:""}</div>`;
+}
+function card(d){
+  const li=document.createElement("li");
+  li.className="item"+(d.id===st.sel?" sel":"");li.id="h-"+d.id;li.tabIndex=0;
+  li.innerHTML=`${icon(shapeOf(d),d.hw?"hw":d.c," class=\"mk\"")}
+  <div style="min-width:0">${infoHtml(d,true)}</div>`;
+  li.addEventListener("click",e=>{
+    if(e.target.closest("a"))return;
+    const act=e.target.closest("[data-act]")?.dataset.act;
+    if(act==="edit"){e.stopPropagation();openForm(d);return}
+    if(act==="del"){e.stopPropagation();askDelete(li,d);return}
+    if(act==="yes"){e.stopPropagation();removeOwn(d);return}
+    if(act==="no"){e.stopPropagation();render();return}
+    select(d.id,false)});
+  li.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target===li)select(d.id,false)});
+  return li;
+}
+function askDelete(li,d){
+  const box=li.querySelector(".links");
+  box.querySelectorAll("[data-act]").forEach(b=>b.remove());
+  const c=document.createElement("span");c.className="confirm";
+  c.innerHTML=`${tr("Wirklich entfernen?")} <button class="btn danger small" type="button" data-act="yes">${tr("Entfernen")}</button><button class="btn ghost small" type="button" data-act="no">${tr("Behalten")}</button>`;
+  box.appendChild(c);
+}
+const ORDER=Object.keys(LANDS);
+function render(){
+  const list=$("list");list.innerHTML="";
+  const shown=all().filter(matches).sort((a,b)=>ORDER.indexOf(a.L)-ORDER.indexOf(b.L)||a.c.localeCompare(b.c)||String(a.p).localeCompare(String(b.p)));
+  shown.forEach(d=>list.appendChild(card(d)));
+  if(!shown.length)list.innerHTML=`<li class="empty">${tr("Kein Eintrag passt zu diesen Filtern. Einen Filter abwählen oder die Suche leeren.")}</li>`;
+  $("count").textContent=lang==="en"?`${shown.length} of ${all().length} shown · sorted by country and postcode`:`${shown.length} von ${all().length} angezeigt · sortiert nach Land und PLZ`;
+  $("total").textContent=all().length;
+  countryChips();
+  if(st.sel&&!(byId(st.sel)&&matches(byId(st.sel))))st.sel=null;
+  drawMarks();
+}
+function select(id,fromMap){
+  st.sel=id;
+  document.querySelectorAll(".item.sel").forEach(x=>x.classList.remove("sel"));
+  const li=id&&$("h-"+id);
+  // nebeneinander die Liste mitführen; am Handy bleibt der Blick auf der Karte mit dem Infofenster
+  const wide=innerWidth>860,smooth=matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth";
+  if(li){li.classList.add("sel");if(fromMap&&wide)li.scrollIntoView({block:"nearest",behavior:smooth})}
+  const d=id&&byId(id);
+  if(d&&!fromMap){
+    const[x,y]=P(d.lon,d.lat);
+    if(x<vb.x+vb.w*0.08||x>vb.x+vb.w*0.92||y<vb.y+vb.h*0.15||y>vb.y+vb.h*0.92){vb.x=x-vb.w/2;vb.y=y-vb.h/2;applyVB()}
+    if(!wide)svg.scrollIntoView({block:"nearest",behavior:smooth});
+  }
+  pop.dataset.id="";
+  drawMarks();
+}
+
+// Filter
+function subChips(){
+  const row=$("subRow");row.innerHTML="";
+  const subs=st.cat==="all"?[...SUBS.tool,...SUBS.wood]:SUBS[st.cat];
+  subs.forEach((s,i)=>{const b=document.createElement("button");b.className="chip";b.id="s-"+st.cat+"-"+i;b.textContent=tr(s);
+    b.setAttribute("aria-pressed",st.sub===s);b.onclick=()=>{st.sub=st.sub===s?null:s;subChips();render()};row.appendChild(b)});
+}
+document.querySelectorAll("#catRow .chip").forEach(b=>b.onclick=()=>{
+  st.cat=b.dataset.cat;st.sub=null;
+  document.querySelectorAll("#catRow .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  subChips();render();
+});
+document.querySelectorAll("[data-flag]").forEach(b=>b.onclick=()=>{
+  const f=b.dataset.flag;st.flags.has(f)?st.flags.delete(f):st.flags.add(f);
+  b.setAttribute("aria-pressed",st.flags.has(f));render();
+});
+if($("f-hw"))$("f-hw").onclick=e=>{st.hw=!st.hw;e.currentTarget.setAttribute("aria-pressed",st.hw);render()};
+$("q").addEventListener("input",e=>{st.q=e.target.value.trim().toLowerCase();render()});
+
+// Eingabemaske
+// Ergänzte Punkte: je Person ein Dokument punkte/<Kennung> mit allen ihren Punkten; nur sie selbst und der Besitzer schreiben es
+let db=null,canWrite=false,editing=null,pick=null,myId=null,amOwner=false;
+const DOCS={},NAMES={};
+function fillLands(){const v=$("f-L").value;$("f-L").innerHTML=Object.entries(LANDS).map(([k,v])=>`<option value="${k}">${tr(v)}</option>`).join("");if(v)$("f-L").value=v}
+fillLands();
+function fillSubs(){const c=$("f-c").value,v=$("f-s").value;$("f-s").innerHTML=SUBS[c].map(s=>`<option value="${s}">${tr(s)}</option>`).join("");if(SUBS[c].includes(v))$("f-s").value=v;$("f-pr-wrap").hidden=c!=="wood"}
+$("f-c").onchange=fillSubs;
+function drawPin(){
+  gPin.innerHTML="";if(!pick||$("panel").hidden)return;
+  const[x,y]=P(pick.lon,pick.lat);
+  const g=el("g",{transform:`translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${S.toFixed(3)})`},gPin);
+  el("circle",{r:9},g);el("line",{x1:-15,y1:0,x2:-5,y2:0},g);el("line",{x1:5,y1:0,x2:15,y2:0},g);el("line",{x1:0,y1:-15,x2:0,y2:-5},g);el("line",{x1:0,y1:5,x2:0,y2:15},g);
+}
+function showPos(){
+  const p=$("f-pos");
+  if(pick){p.textContent=`${pick.lat.toFixed(3)}° N, ${Math.abs(pick.lon).toFixed(3)}° ${pick.lon<0?"W":lang==="en"?"E":"O"}`;p.classList.remove("missing")}
+  else{p.textContent=tr("Noch nicht gesetzt: in die Karte klicken");p.classList.add("missing")}
+}
+function openForm(d){
+  editing=d||null;
+  $("panelTitle").textContent=tr(d?"Punkt bearbeiten":"Punkt ergänzen");$("panelTitle").dataset.de=d?"Punkt bearbeiten":"Punkt ergänzen";
+  $("f-c").value=d?.c||"tool";fillSubs();
+  $("f-n").value=d?.n||"";$("f-s").value=d?.s||SUBS[$("f-c").value][0];$("f-a").value=d?.a||"";$("f-p").value=d?.p||"";$("f-o").value=d?.o||"";
+  $("f-L").value=d?.L||"DE";$("f-w").value=d?.w||"";$("f-art").value=d?.art||"laden";$("f-k").value=d?.k||"unbekannt";$("f-pr").value=d?.pr||"ja";$("f-t").value=d?.t||"";
+  pick=d?{lat:d.lat,lon:d.lon}:null;$("formerr").textContent="";
+  $("panel").hidden=false;svg.classList.add("picking");showPos();drawPin();
+  $("panel").scrollIntoView({block:"nearest"});$("f-n").focus({preventScroll:true});
+}
+function closeForm(){$("panel").hidden=true;svg.classList.remove("picking");editing=null;pick=null;drawPin()}
+$("addBtn").onclick=()=>openForm(null);
+$("cancelBtn").onclick=closeForm;
+svg.addEventListener("click",e=>{
+  if(suppress||e.target.closest(".m"))return;
+  if($("panel").hidden){if(st.sel)select(null);return}
+  const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;
+  const m=svg.getScreenCTM();if(!m)return;
+  const loc=pt.matrixTransform(m.inverse());const[lon,lat]=INV(loc.x,loc.y);
+  if(lon<EXT[0]||lon>EXT[2]||lat<EXT[1]||lat>EXT[3])return;
+  pick={lat:+lat.toFixed(4),lon:+lon.toFixed(4)};showPos();drawPin();
+});
+$("form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const err=$("formerr");err.textContent="";
+  const n=$("f-n").value.trim();
+  if(!n){err.textContent=tr("Bitte einen Namen eintragen.");$("f-n").focus();return}
+  if(!pick){err.textContent=tr("Bitte den Standort setzen: in die Karte klicken.");return}
+  let w=$("f-w").value.trim();if(w&&!/^https?:\/\//i.test(w))w="https://"+w;
+  if(w&&!safeUrl(w)){err.textContent=tr("Die Website-Adresse ist ungültig. Beispiel: https://beispiel.de");$("f-w").focus();return}
+  const c=$("f-c").value;
+  const doc={n,c,s:$("f-s").value,a:$("f-a").value.trim(),p:$("f-p").value.trim(),o:$("f-o").value.trim(),L:$("f-L").value,w,
+    art:$("f-art").value,k:$("f-k").value,t:$("f-t").value.trim(),lat:pick.lat,lon:pick.lon,updated:new Date().toISOString()};
+  if(c==="wood")doc.pr=$("f-pr").value;
+  if(!db){err.textContent=tr("Speichern ist in dieser Ansicht nicht möglich. Öffne die Seite auf claude.ai und melde dich an.");return}
+  if(!myId){err.textContent=tr("Dein Konto gibt dieser Seite keine Kennung; Speichern geht deshalb nicht.");return}
+  $("saveBtn").disabled=true;
+  try{
+    const uid=editing?editing.uid:myId;
+    const items=(DOCS[uid]||[]).filter(x=>!editing||x.id!==editing.iid);
+    items.push({...doc,id:editing?editing.iid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),created:editing?.created||doc.updated});
+    await db.doc("punkte/"+uid).set({items,updated:doc.updated});
+    closeForm();
+  }catch(x){
+    err.textContent=tr(x?.code==="quota_exceeded"?"Der Speicher ist voll. Entferne eigene Punkte, die du nicht mehr brauchst."
+      :x?.code==="invalid_argument"?"Du hast hier keine Schreibrechte. Punkte ergänzen kann nur, wen die Besitzerin oder der Besitzer der Karte zum Bearbeiten eingeladen hat."
+      :"Speichern hat nicht geklappt. Bitte gleich noch einmal versuchen.");
+    if(x?.code==="invalid_argument"&&!editing){canWrite=false;$("addBtn").hidden=true}
+  }finally{$("saveBtn").disabled=false}
+});
+async function removeOwn(d){
+  try{
+    const items=(DOCS[d.uid]||[]).filter(x=>x.id!==d.iid);
+    await db.doc("punkte/"+d.uid).set({items,updated:new Date().toISOString()});
+    if(st.sel===d.id)st.sel=null;
+  }catch(x){setNote(()=>tr("Entfernen hat nicht geklappt. Bitte noch einmal versuchen."));render()}
+}
+
+// Gespeicherte eigene Punkte
+function valid(o){return o&&typeof o.n==="string"&&o.n&&(o.c==="tool"||o.c==="wood")&&Number.isFinite(o.lat)&&Number.isFinite(o.lon)
+  &&o.lon>=EXT[0]&&o.lon<=EXT[2]&&o.lat>=EXT[1]&&o.lat<=EXT[3]}
+(async()=>{
+  const note=$("dbnote");
+  try{db=window.claude?.use?await window.claude.use("db"):null}catch{db=null}
+  if(!db){setNote(()=>tr("Fehlt ein Händler oder stimmt etwas nicht?"));$("addBtn").hidden=true;return}
+  let user=null;try{user=await window.claude.use("user")}catch{}
+  const can=user?await user.can("data.write"):null;
+  myId=user?await user.id():null;amOwner=user?await user.isOwner():false;
+  canWrite=can!==false&&!!myId;$("addBtn").hidden=!canWrite;
+  let settled=false;
+  const timer=setTimeout(()=>{if(!settled)setNote(()=>tr("Ergänzte Punkte sind gerade nicht erreichbar; die Liste kann unvollständig sein."))},10000);
+  db.collection("punkte").onSnapshot(async snap=>{
+    OWN=[];
+    snap.docs.forEach(s=>{
+      const items=Array.isArray(s.data()?.items)?s.data().items:[];DOCS[s.id]=items;
+      items.forEach(o=>{if(valid(o)&&o.id)OWN.push({...o,L:LANDS[o.L]?o.L:"DE",s:String(o.s||""),own:true,uid:s.id,iid:String(o.id),id:"u-"+s.id+"-"+o.id})});
+    });
+    if(!snap.metadata.fromCache){settled=true;clearTimeout(timer)}
+    const mine=OWN.filter(d=>d.uid===myId).length;
+    const nOwn=OWN.length,cw=canWrite;setNote(()=>nOwn?(lang==="en"?`${nOwn} added points, ${mine} of them yours`:`${nOwn} ergänzte Punkte, davon ${mine} von dir`):tr(cw?"Noch keine ergänzten Punkte. Mit „Punkt ergänzen“ legst du den ersten an.":"Noch keine ergänzten Punkte."));
+    render();
+    const ids=[...new Set(OWN.map(d=>d.uid))].filter(id=>id!==myId&&!(id in NAMES));
+    if(user&&ids.length){try{const ps=await user.profiles(ids);ids.forEach(id=>NAMES[id]=ps[id]?.name||"");render()}catch{}}
+  },e=>{clearTimeout(timer);setNote(()=>tr("Ergänzte Punkte konnten nicht geladen werden."))});
+})();
+
+var noteFn;  // var: die Datenbank-Anzeige kann vor dieser Zeile schreiben
+function setNote(fn){noteFn=fn;$("dbnote").textContent=fn()}
+const DYN="#views,#subRow,#list,#legend,#count,#dbnote,#total,#pop,#map,#f-s,#f-L,#f-pos,#panelTitle,#formerr";
+const ORIG=new WeakMap(),ORIGA=new WeakMap();
+function applyLang(){
+  root.lang=lang;document.title=tr("Werkzeug- und Holzhändler Deutschland");
+  const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  for(let n;(n=w.nextNode());){
+    const pe=n.parentElement;if(!pe||pe.closest("script,style")||pe.closest(DYN))continue;
+    if(!ORIG.has(n)){const k=n.nodeValue.trim().replace(/\s+/g," ");if(!k||!(k in EN))continue;ORIG.set(n,n.nodeValue)}
+    const o=ORIG.get(n),k=o.trim().replace(/\s+/g," ");n.nodeValue=lang==="en"?o.replace(o.trim(),EN[k]):o;
+  }
+  document.querySelectorAll("[aria-label],[placeholder],[title]").forEach(el=>{
+    if(el.closest("#list,#pop,#map,#views,#subRow"))return;
+    let o=ORIGA.get(el);if(!o){o={};for(const a of ["aria-label","placeholder","title"]){const v=el.getAttribute(a);if(v&&v in EN)o[a]=v}ORIGA.set(el,o)}
+    for(const a in o)el.setAttribute(a,tr(o[a]));
+  });
+  document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
+  if($("panelTitle").dataset.de)$("panelTitle").textContent=tr($("panelTitle").dataset.de);
+  $("dbnote").textContent=noteFn?noteFn():tr("Ergänzte Punkte werden geladen …");
+  fillLands();fillSubs();showPos();legend();drawLabels();countryChips();subChips();pop.dataset.id="";render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;try{localStorage.setItem("karte-lang",lang)}catch(e){}applyLang()}));
+fitBox(EXT);subChips();render();applyLang();
+</script>
+
+</body>
+</html>
