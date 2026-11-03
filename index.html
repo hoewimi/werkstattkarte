@@ -164,7 +164,7 @@ svg.map.picking{cursor:crosshair}
 .tag.warn{border-style:dashed}
 .tag.own{color:var(--ink);border:1px dashed var(--ink)}
 .links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:6px;font-size:13px}
-.links a{color:var(--tool);text-underline-offset:2px;overflow-wrap:anywhere}
+.links a,.notes a,.lede a{color:var(--tool);text-underline-offset:2px;overflow-wrap:anywhere}
 .confirm{font-size:13px;color:var(--err);display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center}
 .empty{padding:24px 8px;color:var(--muted)}
 
@@ -179,7 +179,7 @@ svg.map.picking{cursor:crosshair}
   <header>
     <div>
       <h1>Werkzeug- und Holzhändler Deutschland</h1>
-      <p class="lede">Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug im Stil von DICTUM und Dieter Schmid sowie Holzhändler, die auch an Privatleute verkaufen, in Deutschland, den Nachbarländern und dem Vereinigten Königreich. Die recherchierten Einträge sind an der Händlerseite geprüft. Weitere Holzhändler, von Lesern empfohlen, listet die Zeitschrift HolzWerken unter holzwerken.net/finder.</p>
+      <p class="lede">Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug im Stil von DICTUM und Dieter Schmid sowie Holzhändler, die auch an Privatleute verkaufen, in Deutschland, den Nachbarländern und dem Vereinigten Königreich. Die recherchierten Einträge sind an der Händlerseite geprüft. Weitere Holzhändler, von Lesern empfohlen, listet die Zeitschrift HolzWerken unter <a href="https://www.holzwerken.net/finder/" target="_blank" rel="noopener">holzwerken.net/finder</a>.</p>
     </div>
     <div class="design">
       <div class="stand"><span>Stand 02.11.2026</span> · <span id="total"></span> <span>Einträge</span></div>
@@ -275,7 +275,7 @@ svg.map.picking{cursor:crosshair}
     <div>
       <h2>HolzWerken-Liste</h2>
       <ul>
-        <li>Die Leserliste der Zeitschrift HolzWerken mit mehreren hundert weiteren Holzhändlern ist auf dieser Karte nicht enthalten. Es gibt sie kostenlos als PDF unter holzwerken.net/finder.</li>
+        <li>Die Leserliste der Zeitschrift HolzWerken mit mehreren hundert weiteren Holzhändlern ist auf dieser Karte nicht enthalten. Es gibt sie kostenlos als PDF unter <a href="https://www.holzwerken.net/finder/" target="_blank" rel="noopener">holzwerken.net/finder</a>.</li>
       </ul>
     </div>
     <div>
@@ -515,10 +515,10 @@ const HW=[];
 const EN={
 "Hinweis auf GitHub": "Report on GitHub",
 "Fehlt ein Händler oder stimmt etwas nicht?": "Is a dealer missing or something wrong?",
-"Die Leserliste der Zeitschrift HolzWerken mit mehreren hundert weiteren Holzhändlern ist auf dieser Karte nicht enthalten. Es gibt sie kostenlos als PDF unter holzwerken.net/finder.": "The reader list of the German magazine HolzWerken, with several hundred more timber dealers, is not included on this map. It is available free as a PDF at holzwerken.net/finder.",
+"Die Leserliste der Zeitschrift HolzWerken mit mehreren hundert weiteren Holzhändlern ist auf dieser Karte nicht enthalten. Es gibt sie kostenlos als PDF unter": "The reader list of the German magazine HolzWerken, with several hundred more timber dealers, is not included on this map. It is available free as a PDF at",
 "Vereinigtes Königreich: Axminster Tools ist seit Oktober 2025 in Administration, aufgenommen ist nur der Laden in Axminster. The Toolpost und Peter Child haben geschlossen; Craft Supplies, Ashley Iles und Robert Sorby verkaufen nur über Händler. In Schottland und Nordirland fand die Recherche kaum Werkzeughändler.": "United Kingdom: Axminster Tools has been in administration since October 2025; only the Axminster store is listed. The Toolpost and Peter Child have closed; Craft Supplies, Ashley Iles and Robert Sorby sell only through dealers. In Scotland and Northern Ireland the research found hardly any tool dealers.",
 "Werkzeug- und Holzhändler Deutschland": "Woodworking Tool and Timber Dealers",
-"Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug im Stil von DICTUM und Dieter Schmid sowie Holzhändler, die auch an Privatleute verkaufen, in Deutschland, den Nachbarländern und dem Vereinigten Königreich. Die recherchierten Einträge sind an der Händlerseite geprüft. Weitere Holzhändler, von Lesern empfohlen, listet die Zeitschrift HolzWerken unter holzwerken.net/finder.": "Specialist dealers for fine hand tools, woodturning supplies and spoon carving tools in the spirit of DICTUM and Dieter Schmid, plus timber merchants who also sell to private customers, in Germany, its neighbouring countries and the United Kingdom. The researched entries have been checked against the dealer's own website. More timber dealers, recommended by readers, are listed by the German magazine HolzWerken at holzwerken.net/finder.",
+"Fachhändler für feine Handwerkzeuge, Drechselbedarf und Löffelschnitz-Werkzeug im Stil von DICTUM und Dieter Schmid sowie Holzhändler, die auch an Privatleute verkaufen, in Deutschland, den Nachbarländern und dem Vereinigten Königreich. Die recherchierten Einträge sind an der Händlerseite geprüft. Weitere Holzhändler, von Lesern empfohlen, listet die Zeitschrift HolzWerken unter": "Specialist dealers for fine hand tools, woodturning supplies and spoon carving tools in the spirit of DICTUM and Dieter Schmid, plus timber merchants who also sell to private customers, in Germany, its neighbouring countries and the United Kingdom. The researched entries have been checked against the dealer's own website. More timber dealers, recommended by readers, are listed by the German magazine HolzWerken at",
 "Stand 02.11.2026": "As of 2 Nov 2026",
 "Einträge": "entries",
 "Sprache": "Language",
@@ -582,7 +582,8 @@ const EN={
 "DICTUM sitzt seit 2018 in Plattling, nicht mehr in Metten. Dazu kommen der Laden mit Kurswerkstatt in München und die Kurswerkstatt Niederalteich.": "DICTUM has been based in Plattling since 2018, no longer in Metten. There is also the shop with a course workshop in Munich and the course workshop in Niederalteich.",
 "Die hohlen Punkte sind eine Kopie der Holzhändlerliste von HolzWerken (Vincentz Network), Stand Dezember 2025. Es sind Empfehlungen von Lesern für den privaten Holzkauf, hier nicht einzeln geprüft; einzelne Händler können inzwischen geschlossen sein. Vorher anrufen.": "The hollow points are a copy of the timber dealer list of HolzWerken (Vincentz Network), as of December 2025. They are reader recommendations for buying timber as a private customer, not checked individually here; some dealers may have closed since. Call ahead.", 
 "Verortet über die Postleitzahl, also auf Ortsebene. Händler, die schon geprüft auf der Karte stehen, sind nur einmal eingetragen.": "Placed by postcode, i.e. at town level. Dealers that are already on the map as checked entries appear only once.",
-"Maßgeblich ist das Original, kostenlos als PDF unter holzwerken.net/finder. Ob es eine neuere Fassung gibt, wird monatlich geprüft, zuletzt geprüft am 03.11.2026.": "The original, available free as a PDF at holzwerken.net/finder, is authoritative. It is checked monthly for a newer version, last checked on 2026-11-03.",
+"Maßgeblich ist das Original, kostenlos als PDF unter": "The original is authoritative, available free as a PDF at",
+". Ob es eine neuere Fassung gibt, wird monatlich geprüft, zuletzt geprüft am 03.11.2026.": ". It is checked monthly for a newer version, last checked on 2026-11-03.",
 "In Mecklenburg-Vorpommern, Brandenburg, Sachsen-Anhalt und Thüringen fand die Recherche keinen Holzhändler mit belegtem Privatverkauf.": "In Mecklenburg-Western Pomerania, Brandenburg, Saxony-Anhalt and Thuringia the research found no timber dealer with documented sales to private customers.",
 "Händlerlisten von Kirschen, Pfeil, Tormek und Sorby sind nicht öffentlich; Handwerkzeug-Fachhandel jenseits der großen Versender ist dünn.": "Dealer lists from Kirschen, Pfeil, Tormek and Sorby are not public; specialist hand-tool retail beyond the big mail-order firms is thin.",
 "Löffelschnitzen: Kleine Schmieden mit eigenem Shop für Hakenmesser fand die Recherche in Deutschland und Österreich nicht; die meisten Händler führen Mora, BeaverCraft und Narex. Ausgesprochene Spooncarving-Spezialisten sind Carolina's Slöjd, Hout van Bomen, Wolfknives und Bois et Toile.": "Spoon carving: the research found no small smithies with their own hook-knife shop in Germany or Austria; most dealers stock Mora, BeaverCraft and Narex. Dedicated spoon carving specialists are Carolina's Slöjd, Hout van Bomen, Wolfknives and Bois et Toile.",
@@ -679,6 +680,7 @@ const EN={
 };
 let lang=(()=>{try{const l=localStorage.getItem("karte-lang");if(l==="de"||l==="en")return l}catch(e){}return /^de\b/i.test(navigator.language||"de")?"de":"en"})();
 const tr=s=>lang==="en"&&EN[s]!=null?EN[s]:s;
+const nm=d=>d.pv?tr(d.n):d.n;  // Privatverkäufer ohne Namen, übersetzt
 const txt=d=>lang==="en"&&d.te?d.te:d.t;
 const SUBS={tool:["Handwerkzeug","Drechselbedarf","Löffelschnitzen"],wood:["Edelholz","Tonholz","Drechsel- und Schnitzholz","Holzfachhandel","Sägewerk und Schnittholz","Privatverkäufer"]};
 const ART={laden:"Laden oder Lager",online:"Nur Versand",beides:"Laden und Versand",kurs:"Kursort"};
@@ -850,12 +852,12 @@ function drawMarks(){
   gm.innerHTML="";gHw.innerHTML="";
   all().filter(matches).forEach(d=>{
     const[x,y]=P(d.lon,d.lat);
-    const g=el("g",{class:"m "+d.c+(d.own?" own":"")+(d.hw?" hw":"")+(d.id===st.sel?" sel":""),tabindex:"0",role:"button","aria-label":d.n+", "+d.o,
+    const g=el("g",{class:"m "+d.c+(d.own?" own":"")+(d.hw?" hw":"")+(d.id===st.sel?" sel":""),tabindex:"0",role:"button","aria-label":nm(d)+", "+d.o,
       transform:`translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${S.toFixed(3)})`},d.hw?gHw:gm);
     const k=shapeOf(d);
     if(k==="kreis")el("circle",{class:"shape",r:d.hw?4.2:6},g);else el("path",{class:"shape",d:SHP[k]},g);
     if(d.own)el("circle",{class:"ring",r:10},g);
-    el("title",{},g).textContent=d.n+" – "+d.o;
+    el("title",{},g).textContent=nm(d)+" – "+d.o;
     g.addEventListener("click",e=>{e.stopPropagation();if(!suppress)select(d.id,true)});
     g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(d.id,true)}});
   });
@@ -904,7 +906,7 @@ function infoHtml(d,edit){
   if(d.hw)tags.push(`<span class="tag warn">${tr("Kopie aus HolzWerken-Liste 12/2025")}</span>`);
   const w=safeUrl(d.w),q=safeUrl(d.q);
   const addr=[d.a&&esc(d.a),(d.p||d.o)&&`<span class="plz">${esc(d.p)}</span> ${esc(d.o)}`,d.L!=="DE"&&esc(tr(LANDS[d.L]||d.L)),esc(tr(d.s))].filter(Boolean).join(" · ");
-  return `<h3>${esc(d.n)}</h3>
+  return `<h3>${esc(nm(d))}</h3>
     <div class="addr">${addr}</div>
     ${d.t?`<p class="what">${esc(txt(d))}</p>`:""}
     <div class="tags">${tags.join("")}</div>
